@@ -21,7 +21,7 @@ $SCRIPTS_FOLDER_PATH/ci_test_common.sh
 $SCRIPTS_FOLDER_PATH/ci_test_shadow.sh
 
 # Run Jobs tests with code coverage.
-$SCRIPTS_FOLDER_PATH/ci_test_jobs
+$SCRIPTS_FOLDER_PATH/ci_test_jobs.sh
 
 # Generate code coverage results, but only for files in libraries/.
 lcov --directory . --capture --output-file coverage.info
