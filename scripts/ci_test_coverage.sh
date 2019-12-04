@@ -12,7 +12,7 @@ export COMPILER_OPTIONS="-DIOT_TEST_COVERAGE=1 --coverage"
 SCRIPTS_FOLDER_PATH=../scripts
 
 # Run common tests with code coverage.
-#$SCRIPTS_FOLDER_PATH/ci_test_common.sh
+$SCRIPTS_FOLDER_PATH/ci_test_common.sh
 
 # Run MQTT tests against AWS IoT with code coverage.
 $SCRIPTS_FOLDER_PATH/ci_test_mqtt.sh
