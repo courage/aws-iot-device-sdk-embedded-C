@@ -3,7 +3,7 @@
 # Travis CI uses this script to test the MQTT library.
 
 # Exit on any nonzero return code.
-set -e
+set -ev
 
 CMAKE_FLAGS="-DIOT_DEMO_MQTT_TOPIC_PREFIX=\"\\\"$IOT_IDENTIFIER\\\"\" $COMPILER_OPTIONS"
 TEST_OPTIONS=""
@@ -20,6 +20,7 @@ if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then
         DEMO_OPTIONS+=" -n -u -h localhost -p 1883"
     fi
 else
+    ls ../credentials/
     # Set credentials for AWS IoT.
     CMAKE_FLAGS+=" $AWS_IOT_CREDENTIAL_DEFINES"
 fi
