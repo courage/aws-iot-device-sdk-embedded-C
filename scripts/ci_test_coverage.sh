@@ -12,7 +12,7 @@ export COMPILER_OPTIONS="-DIOT_TEST_COVERAGE=1 --coverage"
 SCRIPTS_FOLDER_PATH=../scripts
 
 # Run common tests with code coverage.
-#$SCRIPTS_FOLDER_PATH/ci_test_common.sh
+$SCRIPTS_FOLDER_PATH/ci_test_common.sh
 
 # Run MQTT tests against AWS IoT with code coverage.
 $SCRIPTS_FOLDER_PATH/ci_test_mqtt.sh
@@ -22,6 +22,9 @@ $SCRIPTS_FOLDER_PATH/ci_test_shadow.sh
 
 # Run Jobs tests with code coverage.
 $SCRIPTS_FOLDER_PATH/ci_test_jobs.sh
+
+# Run Provisioning tests with code coverage.
+$SCRIPTS_FOLDER_PATH/ci_test_provisioning.sh
 
 # Generate code coverage results, but only for files in libraries/.
 lcov --directory . --capture --output-file coverage.info
