@@ -5,7 +5,7 @@
 # Exit on any nonzero return code.
 set -ev
 
-CMAKE_FLAGS="-DIOT_DEMO_MQTT_TOPIC_PREFIX=\"\\\"$IOT_IDENTIFIER\\\"\" $COMPILER_OPTIONS"
+CMAKE_FLAGS_1="-DIOT_DEMO_MQTT_TOPIC_PREFIX=\"\\\"$IOT_IDENTIFIER\\\"\" $COMPILER_OPTIONS"
 TEST_OPTIONS=""
 
 DEMO_OPTIONS="-i $IOT_IDENTIFIER"
@@ -16,17 +16,17 @@ DEMO_OPTIONS="-i $IOT_IDENTIFIER"
 if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then
     if [ "$TRAVIS_OS_NAME" = "linux" ]; then
         # Set the flags and options for a local Mosquitto broker on Linux.
-        CMAKE_FLAGS+=" -DIOT_TEST_MQTT_MOSQUITTO=1 -DIOT_TEST_SERVER=\\\"localhost\\\""
+        CMAKE_FLAGS_2+=" -DIOT_TEST_MQTT_MOSQUITTO=1 -DIOT_TEST_SERVER=\\\"localhost\\\""
         DEMO_OPTIONS+=" -n -u -h localhost -p 1883"
     fi
 else
     ls ../credentials/
     # Set credentials for AWS IoT.
     echo $AWS_IOT_CREDENTIAL_DEFINES
-    echo $CMAKE_FLAGS
-    CMAKE_FLAGS+=" \"$AWS_IOT_CREDENTIAL_DEFINES\""
+    CMAKE_FLAGS_2=" $AWS_IOT_CREDENTIAL_DEFINES"
 fi
 
+CMAKE_FLAGS="$CMAKE_FLAGS_1$CMAKE_FLAGS_2"
 # Build and run executables.
 cmake .. -DIOT_BUILD_TESTS=1 -DCMAKE_BUILD_TYPE=Debug -DIOT_NETWORK_USE_OPENSSL=$IOT_NETWORK_USE_OPENSSL -DCMAKE_C_FLAGS="$CMAKE_FLAGS"
 
