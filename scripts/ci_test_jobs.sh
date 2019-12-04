@@ -62,8 +62,8 @@ cmake .. -DIOT_BUILD_TESTS=1 -DCMAKE_BUILD_TYPE=Debug -DCMAKE_C_FLAGS="$CMAKE_FL
 make -j2 aws_iot_tests_jobs
 
 # Run tests in static memory mode.
-if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then create_jobs; fi
-run_tests
-if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then delete_jobs; fi
+# if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then create_jobs; fi
+# run_tests
+# if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then delete_jobs; fi
 
-if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then trap - EXIT; fi
+# if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then trap - EXIT; fi
