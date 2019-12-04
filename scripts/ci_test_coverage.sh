@@ -15,7 +15,7 @@ SCRIPTS_FOLDER_PATH=../scripts
 $SCRIPTS_FOLDER_PATH/ci_test_common.sh
 
 # Run MQTT tests against AWS IoT with code coverage.
-$SCRIPTS_FOLDER_PATH/ci_test_common.sh
+$SCRIPTS_FOLDER_PATH/ci_test_mqtt.sh
 
 # Run Shadow tests with code coverage.
 $SCRIPTS_FOLDER_PATH/ci_test_shadow.sh
