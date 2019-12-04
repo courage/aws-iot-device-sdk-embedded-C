@@ -21,7 +21,7 @@ if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then
     fi
 else
     # Set credentials for AWS IoT.
-    CMAKE_FLAGS+=" {$AWS_IOT_CREDENTIAL_DEFINES}"
+    CMAKE_FLAGS+=" ${AWS_IOT_CREDENTIAL_DEFINES}"
 fi
 
 # Build and run executables.
