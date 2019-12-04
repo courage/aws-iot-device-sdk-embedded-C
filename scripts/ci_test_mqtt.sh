@@ -22,6 +22,8 @@ if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then
 else
     ls ../credentials/
     # Set credentials for AWS IoT.
+    echo $AWS_IOT_CREDENTIAL_DEFINES
+    echo $CMAKE_FLAGS
     CMAKE_FLAGS+=" \"$AWS_IOT_CREDENTIAL_DEFINES\""
 fi
 
