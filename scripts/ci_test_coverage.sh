@@ -51,7 +51,7 @@ lcov --add-tracefile common.info \
      --add-tracefile mqtt.info \
      --add-tracefile shadow.info \
      --add-tracefile jobs.info \
-     -o coverage.info
+     --output file coverage.info
 
 # Submit the code coverage results. Must be submitted from SDK root directory so
 # Coveralls displays the correct paths.
