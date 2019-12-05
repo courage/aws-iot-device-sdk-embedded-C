@@ -6,7 +6,13 @@
 # Exit on any nonzero return code.
 set -ev
 
+# Function that generates code coverage report from the gcov files for a library. (it ignores all non-production code)
 generate_coverage(){
+    if [ $# -ne 1 ]; then
+        echo '"generate_coverage" requires input argument of coverage filename.'
+        exit 1
+    fi
+
     # Generate code coverage results, but only for files in libraries/.
     lcov --directory . --capture --output-file $1
     lcov --remove $1 '*demo*' --output-file $1
@@ -37,11 +43,16 @@ $SCRIPTS_FOLDER_PATH/ci_test_jobs.sh
 generate_coverage jobs.info
 
 # Run Provisioning tests with code coverage.
-# $SCRIPTS_FOLDER_PATH/ci_test_provisioning.sh
-# generate_coverage provisioning.info
+$SCRIPTS_FOLDER_PATH/ci_test_provisioning.sh
+generate_coverage provisioning.info
 
-# Combine all the coverage reports of all libraries into a single file.
-lcov -a common.info -a mqtt.info -a shadow.info -a jobs.info -o coverage.info  
+# Combine the coverage files of all libraries into a single master coverage file.
+lcov --add-tracefile common.info \
+     --add-tracefile mqtt.info \
+     --add-tracefile shadow.info \ 
+     --add-tracefile jobs.info \
+     --add-tracefile provisioning.info \
+     --output-file coverage.info  
 
 # Submit the code coverage results. Must be submitted from SDK root directory so
 # Coveralls displays the correct paths.
