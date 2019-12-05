@@ -157,14 +157,16 @@ make -j2 aws_iot_tests_provisioning
 # Run tests in no static memory mode.
 run_tests
 
-# Rebuild and run tests in static memory mode. Specify a buffer size to accommodate for credentials.
-cmake .. -DIOT_BUILD_TESTS=1 -DCMAKE_BUILD_TYPE=Debug -DIOT_NETWORK_USE_OPENSSL=$IOT_NETWORK_USE_OPENSSL -DCMAKE_C_FLAGS="-DIOT_STATIC_MEMORY_ONLY=1 -DIOT_MESSAGE_BUFFER_SIZE=4096 $COMMON_CMAKE_C_FLAGS"
+if [ "$RUN_TEST" != "coverage" ]; then
+    # Rebuild and run tests in static memory mode. Specify a buffer size to accommodate for credentials.
+    cmake .. -DIOT_BUILD_TESTS=1 -DCMAKE_BUILD_TYPE=Debug -DIOT_NETWORK_USE_OPENSSL=$IOT_NETWORK_USE_OPENSSL -DCMAKE_C_FLAGS="-DIOT_STATIC_MEMORY_ONLY=1 -DIOT_MESSAGE_BUFFER_SIZE=4096 $COMMON_CMAKE_C_FLAGS"
 
-# Build tests.
-make -j2 aws_iot_tests_provisioning
+    # Build tests.
+    make -j2 aws_iot_tests_provisioning
 
-# Run tests in no static memory mode.
-run_tests
+    # Run tests in no static memory mode.
+    run_tests
+fi
 
 if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then
     teardown
