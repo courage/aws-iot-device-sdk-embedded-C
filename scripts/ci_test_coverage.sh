@@ -25,7 +25,7 @@ function generate_coverage() {
 export COMPILER_OPTIONS="-DIOT_TEST_COVERAGE=1 --coverage"
 
 SCRIPTS_FOLDER_PATH=../scripts
-ls -la $SCRIPTS_FOLDER_PATH
+chmod +x $SCRIPTS_FOLDER_PATH/ci_test_provisioning.sh
 
 # Run Provisioning tests with code coverage.
 $SCRIPTS_FOLDER_PATH/ci_test_provisioning.sh
