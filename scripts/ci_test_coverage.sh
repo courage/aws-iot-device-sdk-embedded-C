@@ -47,7 +47,11 @@ generate_coverage jobs.info
 # generate_coverage provisioning.info
 
 # Combine the coverage files of all libraries into a single master coverage file.
-lcov -a common.info -a mqtt.info -a shadow.info -a jobs.info -o coverage.info
+lcov -a common.info \
+     -a mqtt.info \
+     -a shadow.info \
+     -a jobs.info \
+     -o coverage.info
 
 # Submit the code coverage results. Must be submitted from SDK root directory so
 # Coveralls displays the correct paths.
