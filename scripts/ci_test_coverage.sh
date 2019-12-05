@@ -25,6 +25,11 @@ function generate_coverage() {
 export COMPILER_OPTIONS="-DIOT_TEST_COVERAGE=1 --coverage"
 
 SCRIPTS_FOLDER_PATH=../scripts
+ls -la SCRIPTS_FOLDER_PATH
+
+# Run Provisioning tests with code coverage.
+$SCRIPTS_FOLDER_PATH/ci_test_provisioning.sh
+generate_coverage provisioning.info
 
 # Run common tests with code coverage.
 $SCRIPTS_FOLDER_PATH/ci_test_common.sh
@@ -42,9 +47,6 @@ generate_coverage shadow.info
 $SCRIPTS_FOLDER_PATH/ci_test_jobs.sh
 generate_coverage jobs.info
 
-# Run Provisioning tests with code coverage.
-$SCRIPTS_FOLDER_PATH/ci_test_provisioning.sh
-generate_coverage provisioning.info
 
 # Combine the coverage files of all libraries into a single master coverage file.
 lcov --add-tracefile common.info \
