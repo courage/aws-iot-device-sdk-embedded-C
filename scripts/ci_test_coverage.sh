@@ -49,7 +49,7 @@ generate_coverage jobs.info
 # Combine the coverage files of all libraries into a single master coverage file.
 lcov --add-tracefile common.info \
      --add-tracefile mqtt.info \
-     --add-tracefile shadow.info \ 
+     --add-tracefile shadow.info \
      --add-tracefile jobs.info \
     #  --add-tracefile provisioning.info \
      --output-file coverage.info  
