@@ -29,29 +29,25 @@ SCRIPTS_FOLDER_PATH=../scripts
 # Run common tests with code coverage.
 $SCRIPTS_FOLDER_PATH/ci_test_common.sh
 generate_coverage common.info
+lcov --add-tracefile common.info
 
 # Run MQTT tests against AWS IoT with code coverage.
 $SCRIPTS_FOLDER_PATH/ci_test_mqtt.sh
 generate_coverage mqtt.info
+lcov --add-tracefile mqtt.info
 
 # Run Shadow tests with code coverage.
 $SCRIPTS_FOLDER_PATH/ci_test_shadow.sh
 generate_coverage shadow.info
+lcov --add-tracefile shadow.info
 
 # Run Jobs tests with code coverage.
 $SCRIPTS_FOLDER_PATH/ci_test_jobs.sh
 generate_coverage jobs.info
-
-# Run Provisioning tests with code coverage.
-# $SCRIPTS_FOLDER_PATH/ci_test_provisioning.sh
-# generate_coverage provisioning.info
+lcov --add-tracefile jobs.info
 
 # Combine the coverage files of all libraries into a single master coverage file.
-lcov --add-tracefile common.info \
-     --add-tracefile mqtt.info \
-     --add-tracefile shadow.info \
-     --add-tracefile jobs.info \
-     --output-file coverage.info
+lcov --output-file coverage.info
 
 # Submit the code coverage results. Must be submitted from SDK root directory so
 # Coveralls displays the correct paths.
