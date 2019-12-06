@@ -33,8 +33,6 @@ make -j2 iot_tests_mqtt iot_demo_mqtt
 
 ./output/bin/iot_tests_mqtt $TEST_OPTIONS
 
-# Don't reconfigure CMake if script is invoked for coverage build.
-if [ "$RUN_TEST" != "coverage" ]; then
     if [ "$TRAVIS_OS_NAME" = "linux" ]; then
         ./output/bin/iot_demo_mqtt $DEMO_OPTIONS
     fi
@@ -45,4 +43,3 @@ if [ "$RUN_TEST" != "coverage" ]; then
     make -j2 iot_tests_mqtt iot_demo_mqtt
 
     ./output/bin/iot_tests_mqtt $TEST_OPTIONS
-fi

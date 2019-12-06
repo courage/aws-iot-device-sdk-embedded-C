@@ -57,8 +57,6 @@ if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then trap "delete_jobs" EXIT; fi
 run_tests
 if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then delete_jobs; fi
 
-# Don't reconfigure CMake if script is invoked for coverage build.
-if [ "$RUN_TEST" != "coverage" ]; then
     # Rebuild in static memory mode.
     cmake .. -DIOT_BUILD_TESTS=1 -DCMAKE_BUILD_TYPE=Debug -DCMAKE_C_FLAGS="$CMAKE_FLAGS -DIOT_STATIC_MEMORY_ONLY=1"
     make -j2 aws_iot_tests_jobs
@@ -67,6 +65,5 @@ if [ "$RUN_TEST" != "coverage" ]; then
     if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then create_jobs; fi
     run_tests
     if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then delete_jobs; fi
-fi
     
 if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then trap - EXIT; fi
