@@ -1,7 +1,7 @@
 # Only run on the FleetProvisioning_beta branch for now.
 branches:
   only:
-  - FleetProvisioning_beta
+  - test/coverage-job-with-static-memory-rebuilds
 
 # Build on Ubuntu 16.04 by default.
 os: linux
@@ -15,22 +15,6 @@ compiler:
 # Matrix of tests to run.
 jobs:
   include:
-    # Build checks for pull requests.
-    - if: type = pull_request
-      env: RUN_TEST=build
-    # Documentation check for pull requests.
-    - if: type = pull_request
-      env: RUN_TEST=doc
-    # Spelling check for pull requests.
-    - if: type = pull_request
-      env: RUN_TEST=spelling
-    # Library tests.
-    - env: RUN_TEST=common
-    - env: RUN_TEST=mqtt NETWORK_STACK=mbedtls
-    - env: RUN_TEST=mqtt NETWORK_STACK=openssl
-    - env: RUN_TEST=shadow
-    - env: RUN_TEST=jobs
-    - env: RUN_TEST=provisioning AWS_PROVISIONING_REGION=us-east-1
     - if: type = push
       compiler: gcc
       env: RUN_TEST=coverage
