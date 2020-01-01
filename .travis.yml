@@ -18,7 +18,6 @@ jobs:
     # Code checks.
     - stage: Code checks
     # Build checks for pull requests.
-      if: type = pull_request
       env: RUN_TEST=build
     # Documentation check for pull requests.
     - if: type = pull_request
