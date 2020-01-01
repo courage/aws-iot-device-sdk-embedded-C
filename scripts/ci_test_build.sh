@@ -6,9 +6,9 @@
 set -e
 
 # Treat warnings as errors.
-# if [ "$TRAVIS_COMPILER" = "clang" ]; then
-#     COMPILER_OPTIONS+=" -Werror"
-# fi
+if [ "$TRAVIS_COMPILER" = "clang" ]; then
+    COMPILER_OPTIONS+=" -Werror"
+fi
 
 # Build demos.
 cmake .. -DCMAKE_C_FLAGS="$COMPILER_OPTIONS"
