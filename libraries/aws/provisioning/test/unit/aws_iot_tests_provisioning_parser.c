@@ -340,6 +340,9 @@ TEST_SETUP( Provisioning_Unit_Parser )
 
     /* Initialize the Provisioning library. */
     AwsIotProvisioning_Init( 0 );
+
+    /* Disable unused variable warnings on global variables. */
+    ( void ) _expectedStatusCode;
 }
 
 /*-----------------------------------------------------------*/
