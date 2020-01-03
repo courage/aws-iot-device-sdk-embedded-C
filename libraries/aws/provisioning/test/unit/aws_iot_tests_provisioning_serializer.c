@@ -137,7 +137,11 @@ TEST( Provisioning_Unit_Serializer, TestSerializeCreateKeysAndCertificatePayload
                        memcmp( pExpectedSerialization, pSerializationBuffer,
                                sizeof( pExpectedSerialization ) ) );
 
-    unity_free_mt( pSerializationBuffer );
+    /* Release the allocated payload buffer. */
+    for( size_t index = 0; index < bufferSize; index++ )
+    {
+        unity_free_mt( pSerializationBuffer + index );
+    }
 }
 
 /**
@@ -189,7 +193,6 @@ TEST( Provisioning_Unit_Serializer, TestSerializeRegisterThingPayloadNominalCase
         /* *INDENT-ON* */
     };
 
-
     uint8_t * pSerializationBuffer = NULL;
     size_t bufferSize = 0;
 
@@ -205,7 +208,11 @@ TEST( Provisioning_Unit_Serializer, TestSerializeRegisterThingPayloadNominalCase
     TEST_ASSERT_EQUAL( 0, memcmp( pExpectedSerialization, pSerializationBuffer,
                                   sizeof( pExpectedSerialization ) ) );
 
-    unity_free_mt( pSerializationBuffer );
+    /* Release the allocated payload buffer. */
+    for( size_t index = 0; index < bufferSize; index++ )
+    {
+        unity_free_mt( pSerializationBuffer + index );
+    }
 }
 
 /**
@@ -257,5 +264,9 @@ TEST( Provisioning_Unit_Serializer, TestSerializeRegisterThingPayloadCaseWithout
     TEST_ASSERT_EQUAL( 0, memcmp( pExpectedSerializationWithoutParameters, pSerializationBuffer,
                                   sizeof( pExpectedSerializationWithoutParameters ) ) );
 
-    unity_free_mt( pSerializationBuffer );
+    /* Release the allocated payload buffer. */
+    for( size_t index = 0; index < bufferSize; index++ )
+    {
+        unity_free_mt( pSerializationBuffer + index );
+    }
 }
