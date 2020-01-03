@@ -50,7 +50,7 @@ void RunProvisioningTests( bool disableNetworkTests,
 
     if( disableNetworkTests == false )
     {
-        RUN_TEST_GROUP( Provisioning_System );
+        /* RUN_TEST_GROUP( Provisioning_System ); */
     }
 }
 

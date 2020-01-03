@@ -211,10 +211,10 @@
 
 /* Memory allocation function configuration for libraries affected by
  * IOT_STATIC_MEMORY_ONLY. */
-#if IOT_STATIC_MEMORY_ONLY == 0
-    #define Iot_DefaultMalloc    unity_malloc_mt
-    #define Iot_DefaultFree      unity_free_mt
-#endif /* if IOT_STATIC_MEMORY_ONLY == 0 */
+/* #if IOT_STATIC_MEMORY_ONLY == 0 */
+#define Iot_DefaultMalloc    unity_malloc_mt
+#define Iot_DefaultFree      unity_free_mt
+/* #endif / * if IOT_STATIC_MEMORY_ONLY == 0 * / */
 
 /* Choose the appropriate network abstraction implementation. */
 #if IOT_NETWORK_USE_OPENSSL == 1
@@ -264,10 +264,10 @@
         #error "Unsupported compiler. Only gcc and clang are supported for coverage."
     #endif
 
-    /* Define a custom logging puts function. This function allows coverage
-     * testing of logging functions, but prevents excessive logs from being
-     * printed. */
-    #define IotLogging_Puts       _coveragePuts
+/* Define a custom logging puts function. This function allows coverage
+ * testing of logging functions, but prevents excessive logs from being
+ * printed. */
+    #define IotLogging_Puts    _coveragePuts
 
 /* Includes for coverage logging puts. */
     #include <stdbool.h>
