@@ -138,10 +138,10 @@ TEST( Provisioning_Unit_Serializer, TestSerializeCreateKeysAndCertificatePayload
                                sizeof( pExpectedSerialization ) ) );
 
     /* Release the allocated payload buffer. */
-    for( size_t index = 0; index < bufferSize; index++ )
-    {
-        unity_free_mt( pSerializationBuffer + index );
-    }
+    /* for( size_t index = 0; index < bufferSize; index++ ) */
+    /* { */
+    unity_free_mt( pSerializationBuffer );
+    /* } */
 }
 
 /**
@@ -208,11 +208,12 @@ TEST( Provisioning_Unit_Serializer, TestSerializeRegisterThingPayloadNominalCase
     TEST_ASSERT_EQUAL( 0, memcmp( pExpectedSerialization, pSerializationBuffer,
                                   sizeof( pExpectedSerialization ) ) );
 
+
     /* Release the allocated payload buffer. */
-    for( size_t index = 0; index < bufferSize; index++ )
-    {
-        unity_free_mt( pSerializationBuffer + index );
-    }
+    /* for( size_t index = 0; index < bufferSize; index++ ) */
+    /* { */
+    unity_free_mt( pSerializationBuffer );
+    /* } */
 }
 
 /**
@@ -264,9 +265,10 @@ TEST( Provisioning_Unit_Serializer, TestSerializeRegisterThingPayloadCaseWithout
     TEST_ASSERT_EQUAL( 0, memcmp( pExpectedSerializationWithoutParameters, pSerializationBuffer,
                                   sizeof( pExpectedSerializationWithoutParameters ) ) );
 
+
     /* Release the allocated payload buffer. */
-    for( size_t index = 0; index < bufferSize; index++ )
-    {
-        unity_free_mt( pSerializationBuffer + index );
-    }
+    /* for( size_t index = 0; index < bufferSize; index++ ) */
+    /* { */
+    unity_free_mt( pSerializationBuffer );
+    /* } */
 }
