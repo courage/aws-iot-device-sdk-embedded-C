@@ -140,7 +140,7 @@ TEST( Provisioning_Unit_Serializer, TestSerializeCreateKeysAndCertificatePayload
     /* Release the allocated payload buffer. */
     /* for( size_t index = 0; index < bufferSize; index++ ) */
     /* { */
-    /* unity_free_mt( pSerializationBuffer ); */
+    AwsIotProvisioning_FreePayload( pSerializationBuffer );
     /* } */
 }
 
@@ -212,7 +212,7 @@ TEST( Provisioning_Unit_Serializer, TestSerializeRegisterThingPayloadNominalCase
     /* Release the allocated payload buffer. */
     /* for( size_t index = 0; index < bufferSize; index++ ) */
     /* { */
-    /* unity_free_mt( pSerializationBuffer ); */
+    AwsIotProvisioning_FreePayload( pSerializationBuffer );
     /* } */
 }
 
@@ -269,6 +269,6 @@ TEST( Provisioning_Unit_Serializer, TestSerializeRegisterThingPayloadCaseWithout
     /* Release the allocated payload buffer. */
     /* for( size_t index = 0; index < bufferSize; index++ ) */
     /* { */
-    /* unity_free_mt( pSerializationBuffer ); */
+    AwsIotProvisioning_FreePayload( pSerializationBuffer );
     /* } */
 }
