@@ -1,10 +1,11 @@
 # Common libraries source files.
 set( COMMON_SOURCES
-     src/iot_init.c
+     #src/iot_init.c
      src/iot_logging.c
-     src/iot_static_memory_common.c
-     src/iot_taskpool.c
-     src/iot_taskpool_static_memory.c )
+     src/putchar.c )
+     #src/iot_static_memory_common.c
+     #src/iot_taskpool.c
+     #src/iot_taskpool_static_memory.c )
 
 # Lists of common header files. These are only used for directory organization.
 set( COMMON_PUBLIC_HEADERS

@@ -29,9 +29,10 @@
 #include "iot_config.h"
 
 /* Standard includes. */
-#include <stdarg.h>
-#include <stdio.h>
-#include <string.h>
+/* #include <stdarg.h> */
+/* #include <stdio.h> */
+/* #include <string.h> */
+#include "printf-light-weight.c"
 
 /* Platform clock include. */
 #include "platform/iot_clock.h"
