@@ -124,7 +124,7 @@ static void _printRejectedResponse( const AwsIotProvisioningRejectedResponse_t *
  * shared buffers of the demo.
  */
 static void _demoKeysAndCertificateCallback( void * contextParam,
-                                             const AwsIotProvisioningCreateKeysAndCertificateResponse_t * pResponseInfo )
+                                             const AwsIotProvisioningCreateKeysAndCertResponse_t * pResponseInfo )
 {
     _demoKeysAndCertificateCallbackContext_t * certificateIdTokenContext =
         ( _demoKeysAndCertificateCallbackContext_t * ) contextParam;

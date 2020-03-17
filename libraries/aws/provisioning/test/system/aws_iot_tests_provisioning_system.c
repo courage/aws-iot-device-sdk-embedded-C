@@ -146,7 +146,7 @@ static void _printRejectedResponse( const AwsIotProvisioningRejectedResponse_t *
  * service API.
  */
 static void _printKeysAndCertificateCallback( void * contextParam,
-                                              const AwsIotProvisioningCreateKeysAndCertificateResponse_t * pResponseInfo )
+                                              const AwsIotProvisioningCreateKeysAndCertResponse_t * pResponseInfo )
 {
     ( void ) contextParam;
     AwsIotProvisioning_Assert( pResponseInfo != NULL );
@@ -180,7 +180,7 @@ static void _printKeysAndCertificateCallback( void * contextParam,
 /*-----------------------------------------------------------*/
 
 static void _storeCertificateDataForProvisioning( void * contextParam,
-                                                  const AwsIotProvisioningCreateKeysAndCertificateResponse_t * pResponseInfo )
+                                                  const AwsIotProvisioningCreateKeysAndCertResponse_t * pResponseInfo )
 {
     _keysAndCertificateCallbackContext_t * certificateIdTokenContext =
         ( _keysAndCertificateCallbackContext_t * ) contextParam;

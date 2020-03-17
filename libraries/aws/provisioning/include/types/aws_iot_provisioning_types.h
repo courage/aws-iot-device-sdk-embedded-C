@@ -349,8 +349,7 @@ typedef struct AwsIotProvisioningCreateCertFromCsrCallbackInfo
 
 /**
  * @ingroup provisioning_datatypes_paramstructs
- * @brief Aggregates the data sent as response from AWS IoT Core service for the request to generate new key-pair and
- * certificate for the device.
+ * @brief Aggregates the data from AWS IoT Core's response to the request for new key-pair and certificate creation.
  *
  * @paramfor Response Callback function of @ref provisioning_function_createkeysandcertificate
  *
@@ -358,7 +357,7 @@ typedef struct AwsIotProvisioningCreateCertFromCsrCallbackInfo
  * function
  * whenever the operation completes with a response from the server.
  */
-typedef struct AwsIotProvisioningCreateKeysAndCertificateResponse
+typedef struct AwsIotProvisioningCreateKeysAndCertResponse
 {
     /** @brief The highest level HTTP based status code sent by the server. */
     AwsIotProvisioningServerStatusCode_t statusCode;
@@ -384,7 +383,7 @@ typedef struct AwsIotProvisioningCreateKeysAndCertificateResponse
         /** @brief Represents the rejected response information received from the server. */
         AwsIotProvisioningRejectedResponse_t rejectedResponse;
     } u; /**< @brief Valid member depends on operation status. */
-} AwsIotProvisioningCreateKeysAndCertificateResponse_t;
+} AwsIotProvisioningCreateKeysAndCertResponse_t;
 
 
 /**
@@ -397,7 +396,7 @@ typedef struct AwsIotProvisioningCreateKeysAndCertificateResponse
  * Provides a function to be invoked on successful completion of an @ref AwsIotProvisioning_CreateKeysAndCertificate API
  * operation.
  *
- * @initializer{AwsIotProvisioningCreateKeysAndCertificateCallbackInfo_t,AWS_IOT_PROVISIONING_CREATE_KEYS_AND_CERTIFICATE_CALLBACK_INFO_INITIALIZER}
+ * @initializer{AwsIotProvisioningCreateKeysAndCertificateCallbackInfo_t,AWS_IOT_PROVISIONING_CREATE_KEYS_AND_CERT_CALLBACK_INFO_INITIALIZER}
  */
 typedef struct AwsIotProvisioningCreateKeysAndCertificateCallbackInfo
 {
@@ -407,19 +406,19 @@ typedef struct AwsIotProvisioningCreateKeysAndCertificateCallbackInfo
     /**
      * @brief User-provided callback function signature.
      *
-     * @param[in] userContext #AwsIotProvisioningCreateKeysAndCertificateCallbackInfo_t.userParam
+     * @param[in] userContext #AwsIotProvisioningCreateKeysAndCertCallbackInfo_t.userParam
      * @param[in] serverResponse Parsed server response of either device credentials
      * or provisioned device information.
      *
-     * @see #AwsIotProvisioningCreateKeysAndCertificateResponse_t for more information on the second parameter.
+     * @see #AwsIotProvisioningCreateKeysAndCertResponse_t for more information on the second parameter.
      */
     void ( * function )( void * userContext,
-                         const AwsIotProvisioningCreateKeysAndCertificateResponse_t * serverResponse ); /*<** The user-provided
-                                                                                                         * callback to
-                                                                                                         * invoke; with the
-                                                                                                         *#AwsIotProvisioningCreateKeysAndCertificateCallbackInfo.userParam
-                                                                                                         * data as the #first
-                                                                                                         * parameter. */
+                         const AwsIotProvisioningCreateKeysAndCertResponse_t * serverResponse ); /*<** The user-provided
+                                                                                                  * callback to
+                                                                                                  * invoke; with the
+                                                                                                  *#AwsIotProvisioningCreateKeysAndCertificateCallbackInfo.userParam
+                                                                                                  * data as the #first
+                                                                                                  * parameter. */
 } AwsIotProvisioningCreateKeysAndCertificateCallbackInfo_t;
 
 /**
@@ -499,7 +498,7 @@ typedef struct AwsIotProvisioningRegisterThingCallbackInfo
 #define AWS_IOT_PROVISIONING_CREATE_KEYS_AND_CERTIFICATE_CALLBACK_INFO_INITIALIZER    { 0 } /**< @brief Initializer for
                                                                                              * #AwsIotProvisioningCreateKeysAndCertificateCallbackInfo_t
                                                                                              **/
-#define AWS_IOT_PROVISIONING_CREATE_CERTIFICATE_FROM_CSR_CALLBACK_INFO_INITIALIZER    { 0 } /**< @brief Initializer for
+#define AWS_IOT_PROVISIONING_CREATE_CERT_FROM_CSR_CALLBACK_INFO_INITIALIZER           { 0 } /**< @brief Initializer for
                                                                                              * #AwsIotProvisioningCreateCertFromCsrCallbackInfo_t
                                                                                              **/
 #define AWS_IOT_PROVISIONING_REGISTER_THING_CALLBACK_INFO_INITIALIZER                 { 0 } /**< @brief Initializer for

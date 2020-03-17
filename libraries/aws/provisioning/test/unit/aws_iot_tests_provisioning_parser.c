@@ -153,7 +153,7 @@ const uint8_t _sampleAcceptedKeysAndCertificateResponse[] =
  * @brief Parameters that represent the expected parsing of device credentials to be done by the parser in the test.
  * This will be provided as a context parameter in the callback object supplied to the parser in the test.
  */
-AwsIotProvisioningCreateKeysAndCertificateResponse_t _expectedKeysAndCertificateParsedParams =
+AwsIotProvisioningCreateKeysAndCertResponse_t _expectedKeysAndCertificateParsedParams =
 {
     .statusCode                                    = AWS_IOT_PROVISIONING_SERVER_STATUS_ACCEPTED,
     .u.acceptedResponse.pDeviceCertificate         = ( const char * )
@@ -184,21 +184,21 @@ static void _verifyParsedRejectedResponse( const AwsIotProvisioningRejectedRespo
  * response. It will be passed as context parameter in callback parameter passed in tests.
  */
 static void _testCreateKeysAndCertificateRejectedCallback( void * contextParam,
-                                                           const AwsIotProvisioningCreateKeysAndCertificateResponse_t * pResponseInfo );
+                                                           const AwsIotProvisioningCreateKeysAndCertResponse_t * pResponseInfo );
 
 /**
  * @brief Test user-callback to set expectations on parsing of #_sampleAcceptedKeysAndCertificateResponse as rejected
  * server response. It will be passed as context parameter in callback parameter passed in tests.
  */
 static void _testCreateKeysAndCertificateAcceptedCallback( void * contextParam,
-                                                           const AwsIotProvisioningCreateKeysAndCertificateResponse_t * pResponseInfo );
+                                                           const AwsIotProvisioningCreateKeysAndCertResponse_t * pResponseInfo );
 
 /**
  * @brief Callback for the device credentials parser that fails on being invoked. This is meant to be used for tests
  * that DO NOT expect the callback to be invoked!
  */
 static void _keysAndCertificateCallbackThatFailsOnInvokation( void * contextParam,
-                                                              const AwsIotProvisioningCreateKeysAndCertificateResponse_t * pResponseInfo );
+                                                              const AwsIotProvisioningCreateKeysAndCertResponse_t * pResponseInfo );
 
 /**
  * @brief Callback for register thing response that fails on being invoked. This is meant to be used for tests
@@ -238,7 +238,7 @@ static void _verifyParsedRejectedResponse( const AwsIotProvisioningRejectedRespo
 /*-----------------------------------------------------------*/
 
 static void _testCreateKeysAndCertificateRejectedCallback( void * contextParam,
-                                                           const AwsIotProvisioningCreateKeysAndCertificateResponse_t * pResponseInfo )
+                                                           const AwsIotProvisioningCreateKeysAndCertResponse_t * pResponseInfo )
 {
     AwsIotProvisioningRejectedResponse_t * pExpectedParams =
         ( AwsIotProvisioningRejectedResponse_t * ) contextParam;
@@ -251,10 +251,10 @@ static void _testCreateKeysAndCertificateRejectedCallback( void * contextParam,
 /*-----------------------------------------------------------*/
 
 static void _testCreateKeysAndCertificateAcceptedCallback( void * contextParam,
-                                                           const AwsIotProvisioningCreateKeysAndCertificateResponse_t * pResponseInfo )
+                                                           const AwsIotProvisioningCreateKeysAndCertResponse_t * pResponseInfo )
 {
-    AwsIotProvisioningCreateKeysAndCertificateResponse_t * pExpectedParams =
-        ( AwsIotProvisioningCreateKeysAndCertificateResponse_t * ) contextParam;
+    AwsIotProvisioningCreateKeysAndCertResponse_t * pExpectedParams =
+        ( AwsIotProvisioningCreateKeysAndCertResponse_t * ) contextParam;
 
     /* Disable unused variable warnings. */
     ( void ) pExpectedParams;
@@ -286,7 +286,7 @@ static void _testCreateKeysAndCertificateAcceptedCallback( void * contextParam,
 /*-----------------------------------------------------------*/
 
 static void _keysAndCertificateCallbackThatFailsOnInvokation( void * contextParam,
-                                                              const AwsIotProvisioningCreateKeysAndCertificateResponse_t * pResponseInfo )
+                                                              const AwsIotProvisioningCreateKeysAndCertResponse_t * pResponseInfo )
 {
     ( void ) contextParam;
     ( void ) pResponseInfo;

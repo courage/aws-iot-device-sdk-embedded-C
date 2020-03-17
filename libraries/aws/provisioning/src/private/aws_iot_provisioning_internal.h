@@ -82,9 +82,9 @@
  * @brief Printable names for each of the Provisioning operations.
  */
 /**@{ */
-#define CREATE_KEYS_AND_CERTIFICATE_OPERATION_LOG    "CREATE KEYS AND CERTIFICATE"
-#define CREATE_CERT_FROM_CSR_OPERATION_LOG           "CREATE CERTIFICATE FROM CSR"
-#define REGISTER_THING_OPERATION_LOG                 "REGISTER DEVICE"
+#define CREATE_KEYS_AND_CERT_OPERATION_LOG    "CREATE KEYS AND CERTIFICATE"
+#define CREATE_CERT_FROM_CSR_OPERATION_LOG    "CREATE CERTIFICATE FROM CSR"
+#define REGISTER_THING_OPERATION_LOG          "REGISTER DEVICE"
 /**@} */
 
 /**
@@ -231,35 +231,35 @@
  * @note The complete response topics are suffixed with `AWS_IOT_ACCEPTED_SUFFIX` or `AWS_IOT_REJECTED_SUFFIX` strings.
  * It should be utilized in the @ref provisioning_function_registerthing API function.
  */
-#define PROVISIONING_CREATE_KEYS_AND_CERTIFICATE_RESPONSE_TOPIC_FILTER \
+#define PROVISIONING_CREATE_KEYS_AND_CERT_RESPONSE_TOPIC_FILTER \
     "$aws/certificates/create/"PROVISIONING_FORMAT
 
 /**
  * @brief Length of the MQTT response topic filter for the Provisioning CreateKeysAndCertificate service API.
  */
-#define PROVISIONING_CREATE_KEYS_AND_CERTIFICATE_RESPONSE_TOPIC_FILTER_LENGTH \
-    ( ( uint16_t ) ( sizeof( PROVISIONING_CREATE_KEYS_AND_CERTIFICATE_RESPONSE_TOPIC_FILTER ) - 1 ) )
+#define PROVISIONING_CREATE_KEYS_AND_CERT_RESPONSE_TOPIC_FILTER_LENGTH \
+    ( ( uint16_t ) ( sizeof( PROVISIONING_CREATE_KEYS_AND_CERT_RESPONSE_TOPIC_FILTER ) - 1 ) )
 
 /**
  * @brief The length of the longest MQTT response topic of the Provisioning CreateKeysAndCertificate service API.
  * Out of the two response topics, the "rejected" has the longest length.
  */
-#define PROVISIONING_CREATE_KEYS_AND_CERTIFICATE_RESPONSE_MAX_TOPIC_LENGTH \
-    ( PROVISIONING_CREATE_KEYS_AND_CERTIFICATE_RESPONSE_TOPIC_FILTER_LENGTH + sizeof( AWS_IOT_REJECTED_SUFFIX ) )
+#define PROVISIONING_CREATE_KEYS_AND_CERT_RESPONSE_MAX_TOPIC_LENGTH \
+    ( PROVISIONING_CREATE_KEYS_AND_CERT_RESPONSE_TOPIC_FILTER_LENGTH + sizeof( AWS_IOT_REJECTED_SUFFIX ) )
 
 /**
  * @brief The MQTT request topic for the Provisioning CreateKeysAndCertificate service API.
  *
  * @note It should be utilized in the @ref provisioning_function_registerthing API function.
  */
-#define PROVISIONING_CREATE_KEYS_AND_CERTIFICATE_REQUEST_TOPIC \
+#define PROVISIONING_CREATE_KEYS_AND_CERT_REQUEST_TOPIC \
     "$aws/certificates/create/"PROVISIONING_FORMAT
 
 /**
  * @brief The length of the MQTT request topic for the Provisioning CreateKeysAndCertificate service API.
  */
-#define PROVISIONING_CREATE_KEYS_AND_CERTIFICATE_REQUEST_TOPIC_LENGTH \
-    ( ( uint16_t ) ( sizeof( PROVISIONING_CREATE_KEYS_AND_CERTIFICATE_REQUEST_TOPIC ) - 1 ) )
+#define PROVISIONING_CREATE_KEYS_AND_CERT_REQUEST_TOPIC_LENGTH \
+    ( ( uint16_t ) ( sizeof( PROVISIONING_CREATE_KEYS_AND_CERT_REQUEST_TOPIC ) - 1 ) )
 
 /**
  * @brief The response topic filter for the MQTT CreateCertificateFromCsr service API.
@@ -295,31 +295,31 @@
  * @brief The length of the request topic for the MQTT CreateCertificateFromCsr service API.
  */
 #define PROVISIONING_CREATE_CERT_FROM_CSR_REQUEST_TOPIC_LENGTH \
-    ( ( uint16_t ) ( sizeof( PROVISIONING_CREATE_KEYS_AND_CERTIFICATE_REQUEST_TOPIC ) - 1 ) )
+    ( ( uint16_t ) ( sizeof( PROVISIONING_CREATE_KEYS_AND_CERT_REQUEST_TOPIC ) - 1 ) )
 
 /**
  * @brief The key for the device certificate entry in the response payload of the Provisioning CreateKeysAndCertificate
  * service API.
  */
-#define PROVISIONING_CREATE_KEYS_AND_CERTIFICATE_RESPONSE_PAYLOAD_CERTIFICATE_PEM_STRING          "certificatePem"
+#define PROVISIONING_CREATE_KEYS_AND_CERT_RESPONSE_PAYLOAD_CERTIFICATE_PEM_STRING          "certificatePem"
 
 /**
  * @brief The key for the certificate Id entry in the response payload of the Provisioning CreateKeysAndCertificate
  * service API.
  */
-#define PROVISIONING_CREATE_KEYS_AND_CERTIFICATE_RESPONSE_PAYLOAD_CERTIFICATE_ID_STRING           "certificateId"
+#define PROVISIONING_CREATE_KEYS_AND_CERT_RESPONSE_PAYLOAD_CERTIFICATE_ID_STRING           "certificateId"
 
 /**
  * @brief The key for the private key entry in the response payload of the Provisioning CreateKeysAndCertificate service
  * API.
  */
-#define PROVISIONING_CREATE_KEYS_AND_CERTIFICATE_RESPONSE_PAYLOAD_PRIVATE_KEY_STRING              "privateKey"
+#define PROVISIONING_CREATE_KEYS_AND_CERT_RESPONSE_PAYLOAD_PRIVATE_KEY_STRING              "privateKey"
 
 /**
  * @brief The key for the token key entry in the response payload of the Provisioning CreateKeysAndCertificate service
  * API.
  */
-#define PROVISIONING_CREATE_KEYS_AND_CERTIFICATE_RESPONSE_PAYLOAD_CERTIFICATE_TOKEN_KEY_STRING    "certificateOwnershipToken"
+#define PROVISIONING_CREATE_KEYS_AND_CERT_RESPONSE_PAYLOAD_CERTIFICATE_TOKEN_KEY_STRING    "certificateOwnershipToken"
 
 /**
  * @brief The common path in the request and response MQTT topics of the Provisioning RegisterThing service API.

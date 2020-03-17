@@ -75,7 +75,7 @@ typedef struct _serverResponseThreadContext
  * This is passed as a member of #AwsIotProvisioningCreateKeysAndCertificateCallbackInfo_t type.
  */
 static void _testCreateKeysAndCertificateCallback( void * contextParam,
-                                                   const AwsIotProvisioningCreateKeysAndCertificateResponse_t * pResponseInfo );
+                                                   const AwsIotProvisioningCreateKeysAndCertResponse_t * pResponseInfo );
 
 /**
  * @brief Test user-callback that validates the provision device response parsed and provided by the
@@ -95,7 +95,7 @@ static void _simulateServerResponse( void * pArgument );
  * @brief Dummy user-callback to pass in #AwsIotProvisioningCreateKeysAndCertificateCallbackInfo_t.
  */
 static void _dummyKeysAndCertificateCallback( void * contextParam,
-                                              const AwsIotProvisioningCreateKeysAndCertificateResponse_t * responseInfo );
+                                              const AwsIotProvisioningCreateKeysAndCertResponse_t * responseInfo );
 
 /**
  * @brief Dummy user-callback to pass in #AwsIotProvisioningRegisterThingCallbackInfo_t.
@@ -157,13 +157,13 @@ static const uint32_t _testProvisioningServerResponseThreadTimeoutMs = 90;
  * @brief The accepted response topic for the Provisioning CreateKeysAndCertificate service API.
  */
 static const char * _createKeysAndCertificateRejectedResponseTopic =
-    PROVISIONING_CREATE_KEYS_AND_CERTIFICATE_RESPONSE_TOPIC_FILTER "/rejected";
+    PROVISIONING_CREATE_KEYS_AND_CERT_RESPONSE_TOPIC_FILTER "/rejected";
 
 /**
  * @brief The rejected response topic for the ProvisioningDevice service API.
  */
 static const char * _createKeysAndCertificateAcceptedResponseTopic =
-    PROVISIONING_CREATE_KEYS_AND_CERTIFICATE_RESPONSE_TOPIC_FILTER "/accepted";
+    PROVISIONING_CREATE_KEYS_AND_CERT_RESPONSE_TOPIC_FILTER "/accepted";
 
 /**
  * @brief Sample CBOR encoded response of Provisioning CreateKeysAndCertificate service API containing mock certificate
@@ -195,7 +195,7 @@ static const uint8_t _sampleCreateKeysAndCertificateServerResponsePayload[] =
 /**
  * @brief Expected parameters to the user-callback by the Provisioning library APIs.
  */
-static AwsIotProvisioningCreateKeysAndCertificateResponse_t _expectedCreateKeysAndCertificateCallbackParams =
+static AwsIotProvisioningCreateKeysAndCertResponse_t _expectedCreateKeysAndCertificateCallbackParams =
 {
     .statusCode                                    = AWS_IOT_PROVISIONING_SERVER_STATUS_ACCEPTED,
     .u.acceptedResponse.pDeviceCertificate         = ( const char * )
@@ -343,7 +343,7 @@ static const uint8_t _sampleRejectedServerResponsePayload[] =
 /*-----------------------------------------------------------*/
 
 static void _dummyKeysAndCertificateCallback( void * contextParam,
-                                              const AwsIotProvisioningCreateKeysAndCertificateResponse_t * responseInfo )
+                                              const AwsIotProvisioningCreateKeysAndCertResponse_t * responseInfo )
 {
     ( void ) contextParam;
     ( void ) responseInfo;
@@ -361,10 +361,10 @@ static void _dummyRegisterThingCallback( void * contextParam,
 /*-----------------------------------------------------------*/
 
 static void _testCreateKeysAndCertificateCallback( void * contextParam,
-                                                   const AwsIotProvisioningCreateKeysAndCertificateResponse_t * pResponseInfo )
+                                                   const AwsIotProvisioningCreateKeysAndCertResponse_t * pResponseInfo )
 {
-    AwsIotProvisioningCreateKeysAndCertificateResponse_t * pExpectedParams =
-        ( AwsIotProvisioningCreateKeysAndCertificateResponse_t * ) contextParam;
+    AwsIotProvisioningCreateKeysAndCertResponse_t * pExpectedParams =
+        ( AwsIotProvisioningCreateKeysAndCertResponse_t * ) contextParam;
 
     /* Disable unused warning. */
     ( void ) pExpectedParams;

@@ -394,7 +394,7 @@ AwsIotProvisioningError_t AwsIotProvisioning_CreateKeysAndCertificate( IotMqttCo
                                                                        uint32_t timeoutMs,
                                                                        const AwsIotProvisioningCreateKeysAndCertificateCallbackInfo_t * keysAndCertificateResponseCallback )
 {
-    char responseTopicsBuffer[ PROVISIONING_CREATE_KEYS_AND_CERTIFICATE_RESPONSE_MAX_TOPIC_LENGTH ] =
+    char responseTopicsBuffer[ PROVISIONING_CREATE_KEYS_AND_CERT_RESPONSE_MAX_TOPIC_LENGTH ] =
     { 0 };
     IotMqttError_t mqttOpResult = IOT_MQTT_SUCCESS;
     /* Configuration for subscribing and unsubscribing to/from response topics. */
@@ -404,7 +404,7 @@ AwsIotProvisioningError_t AwsIotProvisioning_CreateKeysAndCertificate( IotMqttCo
         .callbackFunction      = _keysAndCertificateResponseReceivedCallback,
         .timeout               = _AwsIotProvisioningMqttTimeoutMs,
         .pTopicFilterBase      = responseTopicsBuffer,
-        .topicFilterBaseLength = PROVISIONING_CREATE_KEYS_AND_CERTIFICATE_RESPONSE_TOPIC_FILTER_LENGTH
+        .topicFilterBaseLength = PROVISIONING_CREATE_KEYS_AND_CERT_RESPONSE_TOPIC_FILTER_LENGTH
     };
     bool subscribedToResponseTopics = false;
     size_t payloadSize = 0;
@@ -435,14 +435,14 @@ AwsIotProvisioningError_t AwsIotProvisioning_CreateKeysAndCertificate( IotMqttCo
     {
         IotLogError(
             "Invalid callback provided. Both the callback object and functor within should be provided to the %s operation",
-            CREATE_KEYS_AND_CERTIFICATE_OPERATION_LOG );
+            CREATE_KEYS_AND_CERT_OPERATION_LOG );
 
         IOT_SET_AND_GOTO_CLEANUP( AWS_IOT_PROVISIONING_BAD_PARAMETER );
     }
 
     /* Copy the response topics in a local buffer for appropriate suffixes to be added. */
-    ( void ) memcpy( responseTopicsBuffer, PROVISIONING_CREATE_KEYS_AND_CERTIFICATE_RESPONSE_TOPIC_FILTER,
-                     PROVISIONING_CREATE_KEYS_AND_CERTIFICATE_RESPONSE_TOPIC_FILTER_LENGTH );
+    ( void ) memcpy( responseTopicsBuffer, PROVISIONING_CREATE_KEYS_AND_CERT_RESPONSE_TOPIC_FILTER,
+                     PROVISIONING_CREATE_KEYS_AND_CERT_RESPONSE_TOPIC_FILTER_LENGTH );
 
     /* Subscribe to the MQTT response topics. */
     mqttOpResult = AwsIot_ModifySubscriptions( IotMqtt_SubscribeSync, &responseSubscription );
@@ -450,7 +450,7 @@ AwsIotProvisioningError_t AwsIotProvisioning_CreateKeysAndCertificate( IotMqttCo
     if( mqttOpResult != IOT_MQTT_SUCCESS )
     {
         IotLogError( "Unable to subscribe to response topics for %s operation",
-                     CREATE_KEYS_AND_CERTIFICATE_OPERATION_LOG );
+                     CREATE_KEYS_AND_CERT_OPERATION_LOG );
         IOT_SET_AND_GOTO_CLEANUP( AWS_IOT_PROVISIONING_MQTT_ERROR );
     }
     else
@@ -487,11 +487,11 @@ AwsIotProvisioningError_t AwsIotProvisioning_CreateKeysAndCertificate( IotMqttCo
     publishInfo.payloadLength = payloadSize;
 
     /* Set the operation topic name. */
-    publishInfo.pTopicName = PROVISIONING_CREATE_KEYS_AND_CERTIFICATE_REQUEST_TOPIC;
-    publishInfo.topicNameLength = PROVISIONING_CREATE_KEYS_AND_CERTIFICATE_REQUEST_TOPIC_LENGTH;
+    publishInfo.pTopicName = PROVISIONING_CREATE_KEYS_AND_CERT_REQUEST_TOPIC;
+    publishInfo.topicNameLength = PROVISIONING_CREATE_KEYS_AND_CERT_REQUEST_TOPIC_LENGTH;
 
     IotLogDebug( "Provisioning %s message will be published to topic %.*s",
-                 CREATE_KEYS_AND_CERTIFICATE_OPERATION_LOG,
+                 CREATE_KEYS_AND_CERT_OPERATION_LOG,
                  publishInfo.topicNameLength,
                  publishInfo.pTopicName );
 
@@ -504,7 +504,7 @@ AwsIotProvisioningError_t AwsIotProvisioning_CreateKeysAndCertificate( IotMqttCo
     if( mqttOpResult != IOT_MQTT_SUCCESS )
     {
         IotLogError( "Unable to subscribe to response topics for %s operation",
-                     CREATE_KEYS_AND_CERTIFICATE_OPERATION_LOG );
+                     CREATE_KEYS_AND_CERT_OPERATION_LOG );
         IOT_SET_AND_GOTO_CLEANUP( AWS_IOT_PROVISIONING_MQTT_ERROR );
     }
 
@@ -589,8 +589,8 @@ AwsIotProvisioningError_t AwsIotProvisioning_CreateCertificateFromCsr( IotMqttCo
     if( status == AWS_IOT_PROVISIONING_SUCCESS )
     {
         /* Copy the response topics in a local buffer for appropriate suffixes to be added. */
-        ( void ) memcpy( responseTopicsBuffer, PROVISIONING_CREATE_KEYS_AND_CERTIFICATE_RESPONSE_TOPIC_FILTER,
-                         PROVISIONING_CREATE_KEYS_AND_CERTIFICATE_RESPONSE_TOPIC_FILTER_LENGTH );
+        ( void ) memcpy( responseTopicsBuffer, PROVISIONING_CREATE_KEYS_AND_CERT_RESPONSE_TOPIC_FILTER,
+                         PROVISIONING_CREATE_KEYS_AND_CERT_RESPONSE_TOPIC_FILTER_LENGTH );
 
         /* Subscribe to the MQTT response topics. */
         mqttOpResult = AwsIot_ModifySubscriptions( IotMqtt_SubscribeSync, &responseSubscription );
@@ -684,7 +684,7 @@ AwsIotProvisioningError_t AwsIotProvisioning_CreateCertificateFromCsr( IotMqttCo
                          "Topic={%.*s}, Operation={%s}, MQTTError={%s}",
                          publishInfo.topicNameLength,
                          publishInfo.pTopicName,
-                         CREATE_KEYS_AND_CERTIFICATE_OPERATION_LOG,
+                         CREATE_KEYS_AND_CERT_OPERATION_LOG,
                          IotMqtt_strerror( mqttOpResult ) );
             status = AWS_IOT_PROVISIONING_MQTT_ERROR;
         }

@@ -101,7 +101,7 @@ static AwsIotProvisioningError_t _parseRejectedResponse( IotSerializerDecoderObj
                                            &errorCodeDecoder ) != IOT_SERIALIZER_SUCCESS )
     {
         IotLogError( "Cannot find entry for \"%s\" in response from server of %s operation.",
-                     PROVISIONING_CREATE_KEYS_AND_CERTIFICATE_RESPONSE_PAYLOAD_CERTIFICATE_PEM_STRING,
+                     PROVISIONING_CREATE_KEYS_AND_CERT_RESPONSE_PAYLOAD_CERTIFICATE_PEM_STRING,
                      pOperationName );
         IOT_SET_AND_GOTO_CLEANUP( AWS_IOT_PROVISIONING_BAD_RESPONSE );
     }
@@ -157,7 +157,7 @@ AwsIotProvisioningError_t _AwsIotProvisioning_ParseKeysAndCertificateResponse( A
     AwsIotProvisioning_Assert( userCallbackInfo != NULL );
 
     IOT_FUNCTION_ENTRY( AwsIotProvisioningError_t, AWS_IOT_PROVISIONING_SUCCESS );
-    AwsIotProvisioningCreateKeysAndCertificateResponse_t userCallbackParam =
+    AwsIotProvisioningCreateKeysAndCertResponse_t userCallbackParam =
         AWS_IOT_PROVISIONING_CREATE_KEYS_AND_CERTIFICATE_CALLBACK_INFO_INITIALIZER;
 
     IotSerializerDecoderObject_t payloadDecoder = IOT_SERIALIZER_DECODER_OBJECT_INITIALIZER;
@@ -173,7 +173,7 @@ AwsIotProvisioningError_t _AwsIotProvisioning_ParseKeysAndCertificateResponse( A
         /* Decoder object initialization failed */
         IotLogError(
             "Could not initialize decoder for parsing response from server of %s operation.",
-            CREATE_KEYS_AND_CERTIFICATE_OPERATION_LOG );
+            CREATE_KEYS_AND_CERT_OPERATION_LOG );
         IOT_SET_AND_GOTO_CLEANUP( AWS_IOT_PROVISIONING_INTERNAL_FAILURE );
     }
 
@@ -181,7 +181,7 @@ AwsIotProvisioningError_t _AwsIotProvisioning_ParseKeysAndCertificateResponse( A
     {
         IotLogError(
             "Invalid container type of response received from server of %s operation. Payload should be of map type.",
-            CREATE_KEYS_AND_CERTIFICATE_OPERATION_LOG );
+            CREATE_KEYS_AND_CERT_OPERATION_LOG );
         IOT_SET_AND_GOTO_CLEANUP( AWS_IOT_PROVISIONING_BAD_RESPONSE );
     }
 
@@ -191,13 +191,13 @@ AwsIotProvisioningError_t _AwsIotProvisioning_ParseKeysAndCertificateResponse( A
 
             /* Look for the certificate PEM data. */
             if( _pAwsIotProvisioningDecoder->find( &payloadDecoder,
-                                                   PROVISIONING_CREATE_KEYS_AND_CERTIFICATE_RESPONSE_PAYLOAD_CERTIFICATE_PEM_STRING,
+                                                   PROVISIONING_CREATE_KEYS_AND_CERT_RESPONSE_PAYLOAD_CERTIFICATE_PEM_STRING,
                                                    &certificatePemDecoder ) != IOT_SERIALIZER_SUCCESS )
             {
                 /* Cannot find "certificatePem" */
                 IotLogError( "Cannot find entry for \"%s\" in response from server of %s operation.",
-                             PROVISIONING_CREATE_KEYS_AND_CERTIFICATE_RESPONSE_PAYLOAD_CERTIFICATE_PEM_STRING,
-                             CREATE_KEYS_AND_CERTIFICATE_OPERATION_LOG );
+                             PROVISIONING_CREATE_KEYS_AND_CERT_RESPONSE_PAYLOAD_CERTIFICATE_PEM_STRING,
+                             CREATE_KEYS_AND_CERT_OPERATION_LOG );
                 IOT_SET_AND_GOTO_CLEANUP( AWS_IOT_PROVISIONING_BAD_RESPONSE );
             }
 
@@ -205,20 +205,20 @@ AwsIotProvisioningError_t _AwsIotProvisioning_ParseKeysAndCertificateResponse( A
             {
                 IotLogError(
                     "Invalid value type of \"%s\" entry in server response of %s operation. Expected type is text string.",
-                    PROVISIONING_CREATE_KEYS_AND_CERTIFICATE_RESPONSE_PAYLOAD_CERTIFICATE_PEM_STRING,
-                    CREATE_KEYS_AND_CERTIFICATE_OPERATION_LOG );
+                    PROVISIONING_CREATE_KEYS_AND_CERT_RESPONSE_PAYLOAD_CERTIFICATE_PEM_STRING,
+                    CREATE_KEYS_AND_CERT_OPERATION_LOG );
                 IOT_SET_AND_GOTO_CLEANUP( AWS_IOT_PROVISIONING_BAD_RESPONSE );
             }
 
             /* Look for the certificate ID data. */
             if( _pAwsIotProvisioningDecoder->find( &payloadDecoder,
-                                                   PROVISIONING_CREATE_KEYS_AND_CERTIFICATE_RESPONSE_PAYLOAD_CERTIFICATE_ID_STRING,
+                                                   PROVISIONING_CREATE_KEYS_AND_CERT_RESPONSE_PAYLOAD_CERTIFICATE_ID_STRING,
                                                    &certificateIdDecoder ) != IOT_SERIALIZER_SUCCESS )
             {
                 /* Cannot find "certificateId" */
                 IotLogError( "Cannot find entry for \"%s\" in response from server of %s operation.",
-                             PROVISIONING_CREATE_KEYS_AND_CERTIFICATE_RESPONSE_PAYLOAD_CERTIFICATE_ID_STRING,
-                             CREATE_KEYS_AND_CERTIFICATE_OPERATION_LOG );
+                             PROVISIONING_CREATE_KEYS_AND_CERT_RESPONSE_PAYLOAD_CERTIFICATE_ID_STRING,
+                             CREATE_KEYS_AND_CERT_OPERATION_LOG );
                 IOT_SET_AND_GOTO_CLEANUP( AWS_IOT_PROVISIONING_BAD_RESPONSE );
             }
 
@@ -226,20 +226,20 @@ AwsIotProvisioningError_t _AwsIotProvisioning_ParseKeysAndCertificateResponse( A
             {
                 IotLogError(
                     "Invalid value type of \"%s\" entry in server response of %s operation. Expected type is text string.",
-                    PROVISIONING_CREATE_KEYS_AND_CERTIFICATE_RESPONSE_PAYLOAD_CERTIFICATE_ID_STRING,
-                    CREATE_KEYS_AND_CERTIFICATE_OPERATION_LOG );
+                    PROVISIONING_CREATE_KEYS_AND_CERT_RESPONSE_PAYLOAD_CERTIFICATE_ID_STRING,
+                    CREATE_KEYS_AND_CERT_OPERATION_LOG );
                 IOT_SET_AND_GOTO_CLEANUP( AWS_IOT_PROVISIONING_BAD_RESPONSE );
             }
 
             /* Look for the private Key data. */
             if( _pAwsIotProvisioningDecoder->find( &payloadDecoder,
-                                                   PROVISIONING_CREATE_KEYS_AND_CERTIFICATE_RESPONSE_PAYLOAD_PRIVATE_KEY_STRING,
+                                                   PROVISIONING_CREATE_KEYS_AND_CERT_RESPONSE_PAYLOAD_PRIVATE_KEY_STRING,
                                                    &privateKeyDecoder ) != IOT_SERIALIZER_SUCCESS )
             {
                 /* Cannot find "private key" */
                 IotLogError( "Cannot find entry for \"%s\" in response from server of %s operation.",
-                             PROVISIONING_CREATE_KEYS_AND_CERTIFICATE_RESPONSE_PAYLOAD_PRIVATE_KEY_STRING,
-                             CREATE_KEYS_AND_CERTIFICATE_OPERATION_LOG );
+                             PROVISIONING_CREATE_KEYS_AND_CERT_RESPONSE_PAYLOAD_PRIVATE_KEY_STRING,
+                             CREATE_KEYS_AND_CERT_OPERATION_LOG );
                 IOT_SET_AND_GOTO_CLEANUP( AWS_IOT_PROVISIONING_BAD_RESPONSE );
             }
 
@@ -247,20 +247,20 @@ AwsIotProvisioningError_t _AwsIotProvisioning_ParseKeysAndCertificateResponse( A
             {
                 IotLogError(
                     "Invalid value type of \"%s\" data in server response of %s operation. Expected type is text string.",
-                    PROVISIONING_CREATE_KEYS_AND_CERTIFICATE_RESPONSE_PAYLOAD_PRIVATE_KEY_STRING,
-                    CREATE_KEYS_AND_CERTIFICATE_OPERATION_LOG );
+                    PROVISIONING_CREATE_KEYS_AND_CERT_RESPONSE_PAYLOAD_PRIVATE_KEY_STRING,
+                    CREATE_KEYS_AND_CERT_OPERATION_LOG );
                 IOT_SET_AND_GOTO_CLEANUP( AWS_IOT_PROVISIONING_BAD_RESPONSE );
             }
 
             /* Look for the certificate ownership token data. */
             if( _pAwsIotProvisioningDecoder->find( &payloadDecoder,
-                                                   PROVISIONING_CREATE_KEYS_AND_CERTIFICATE_RESPONSE_PAYLOAD_CERTIFICATE_TOKEN_KEY_STRING,
+                                                   PROVISIONING_CREATE_KEYS_AND_CERT_RESPONSE_PAYLOAD_CERTIFICATE_TOKEN_KEY_STRING,
                                                    &ownershipTokenDecoder ) != IOT_SERIALIZER_SUCCESS )
             {
                 /* Cannot find "certificate ownership token" */
                 IotLogError( "Cannot find entry for \"%s\" in response from server of %s operation.",
-                             PROVISIONING_CREATE_KEYS_AND_CERTIFICATE_RESPONSE_PAYLOAD_CERTIFICATE_TOKEN_KEY_STRING,
-                             CREATE_KEYS_AND_CERTIFICATE_OPERATION_LOG );
+                             PROVISIONING_CREATE_KEYS_AND_CERT_RESPONSE_PAYLOAD_CERTIFICATE_TOKEN_KEY_STRING,
+                             CREATE_KEYS_AND_CERT_OPERATION_LOG );
                 IOT_SET_AND_GOTO_CLEANUP( AWS_IOT_PROVISIONING_BAD_RESPONSE );
             }
 
@@ -268,8 +268,8 @@ AwsIotProvisioningError_t _AwsIotProvisioning_ParseKeysAndCertificateResponse( A
             {
                 IotLogError(
                     "Invalid value type of \"%s\" data in server response of %s operation. Expected type is text string.",
-                    PROVISIONING_CREATE_KEYS_AND_CERTIFICATE_RESPONSE_PAYLOAD_CERTIFICATE_TOKEN_KEY_STRING,
-                    CREATE_KEYS_AND_CERTIFICATE_OPERATION_LOG );
+                    PROVISIONING_CREATE_KEYS_AND_CERT_RESPONSE_PAYLOAD_CERTIFICATE_TOKEN_KEY_STRING,
+                    CREATE_KEYS_AND_CERT_OPERATION_LOG );
                 IOT_SET_AND_GOTO_CLEANUP( AWS_IOT_PROVISIONING_BAD_RESPONSE );
             }
 
