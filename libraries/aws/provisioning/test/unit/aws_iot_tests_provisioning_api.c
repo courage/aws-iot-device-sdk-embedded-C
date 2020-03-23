@@ -686,7 +686,7 @@ static void _testCertFromCsrApiWithServerResponse( _serverResponseThreadContext_
 
     /* Call the API under test. */
     TEST_ASSERT_EQUAL( expectedStatus, AwsIotProvisioning_CreateCertificateFromCsr( _pMqttConnection,
-                                                                                    IOT_MQTT_QOS_1,
+                                                                                    IOT_MQTT_QOS_0,
                                                                                     _testCsrString,
                                                                                     sizeof( _testCsrString ),
                                                                                     _testProvisioningApiTimeoutMs,
