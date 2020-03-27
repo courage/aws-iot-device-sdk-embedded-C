@@ -1,7 +1,7 @@
-# Only run on the feat/csr-in-fleet-provisioning branch for now.
+# Only run on the test/csr-integ-tests branch for now.
 branches:
   only:
-  - feat/csr-in-fleet-provisioning
+  - test/csr-integ-tests
 
 # Build on Ubuntu 16.04 by default.
 os: linux
