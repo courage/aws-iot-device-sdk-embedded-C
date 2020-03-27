@@ -32,15 +32,7 @@ jobs:
 
     # Library tests.
     - stage: Tests
-      env: RUN_TEST=common
-    - env: RUN_TEST=mqtt NETWORK_STACK=mbedtls
-    - env: RUN_TEST=mqtt NETWORK_STACK=openssl
-    - env: RUN_TEST=shadow
-    - env: RUN_TEST=jobs
     - env: RUN_TEST=provisioning AWS_PROVISIONING_REGION=us-east-1
-    - if: type = push
-      compiler: gcc
-      env: RUN_TEST=coverage
 
 # Install dependencies.
 install:
