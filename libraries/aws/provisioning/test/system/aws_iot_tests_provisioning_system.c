@@ -515,9 +515,8 @@ TEST( Provisioning_System, CreateKeysAndCertificateNominalCase )
 }
 
 /**
- * @brief Tests the behavior of the Provisioning CreateKeysAndCertificate API in
- * the nominal (or success) case where the server responds within the specified
- * timeout period.
+ * @brief Verifies the behavior of the CreateCertificateFromCsr API in making
+ * a request for certificate-creation from CSR with the server.
  */
 TEST( Provisioning_System, CreateCertFromCsrNominalCase )
 {
