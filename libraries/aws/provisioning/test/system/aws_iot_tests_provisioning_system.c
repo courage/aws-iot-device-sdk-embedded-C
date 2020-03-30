@@ -111,8 +111,9 @@ static const AwsIotProvisioningRequestParameterEntry_t _pTestParameters[] =
 
 /**
  * @brief Type for the context parameter for the certificate-creation API callbacks.
+ *
  * It will be used for storing the received Certificate ID and the ownership token
- * data received from the server, so that can be used for the RegisterThing API test.
+ * data received from the server. These can then be used for the RegisterThing API test.
  */
 typedef struct _certIdAndOwnershipTokenContext
 {
@@ -132,7 +133,7 @@ static void _printRejectedResponse( const AwsIotProvisioningRejectedResponse_t *
     /*Disable unused parameter warning. */
     ( void ) pResponseInfo;
 
-    AwsIotProvisioning_Assert( pResponseInfo != NULL );
+    TEST_ASSERT_NOT_NULL( pResponseInfo );
 
     IotLogError( "\n Request REJECTED!!\n ErrorCode={%.*s}\n ErrorMessage={%.*s}\n",
                  pResponseInfo->errorCodeLength, pResponseInfo->pErrorCode,
@@ -149,7 +150,7 @@ static void _printKeysAndCertificateCallback( void * contextParam,
                                               const AwsIotProvisioningCreateKeysAndCertificateResponse_t * pResponseInfo )
 {
     ( void ) contextParam;
-    AwsIotProvisioning_Assert( pResponseInfo != NULL );
+    TEST_ASSERT_NOT_NULL( pResponseInfo );
 
     IotLogInfo( "\n Status Code = %d\n", pResponseInfo->statusCode );
 
@@ -187,7 +188,7 @@ static void _printCertificateFromCsrCallback( void * contextParam,
                                               const AwsIotProvisioningCreateCertFromCsrResponse_t * pResponseInfo )
 {
     ( void ) contextParam;
-    AwsIotProvisioning_Assert( pResponseInfo != NULL );
+    TEST_ASSERT_NOT_NULL( pResponseInfo );
 
     IotLogInfo( "\n Status Code = %d\n", pResponseInfo->statusCode );
 
@@ -213,6 +214,31 @@ static void _printCertificateFromCsrCallback( void * contextParam,
 
 /*-----------------------------------------------------------*/
 
+/**
+ * @brief Callback function that tests for the "Invalid CSR" status in the
+ * parsed server response in the failure case of calling of the CreateCertFromCsr API
+ * with an invalid CSR string.
+ */
+static void _checkInvalidCsrServerResponseCallback( void * contextParam,
+                                                    const AwsIotProvisioningCreateCertFromCsrResponse_t * pResponseInfo )
+{
+    ( void ) contextParam;
+    TEST_ASSERT_NOT_NULL( pResponseInfo );
+
+    /* Make sure that we have received an "Invalid CSR" response from the server. */
+    TEST_ASSERT_MESSAGE( pResponseInfo->statusCode == AWS_IOT_PROVISIONING_SERVER_STATUS_INVALID_CSR,
+                         "Callback didn't receive the expected rejected server response status: "
+                         "ExpectedResponseStatus={INVALID_CSR}" );
+
+    _printRejectedResponse( &pResponseInfo->u.rejectedResponse );
+}
+
+/*-----------------------------------------------------------*/
+
+/**
+ * @brief Callback for the KeysAndCertificate operation for copying the server provided
+ * credentials in buffers for use in RegisterThing test.
+ */
 static void _storeDataFromKeysAndCertResponseCallback( void * contextParam,
                                                        const AwsIotProvisioningCreateKeysAndCertificateResponse_t * pResponseInfo )
 {
@@ -226,6 +252,7 @@ static void _storeDataFromKeysAndCertResponseCallback( void * contextParam,
         /* Allocate buffer space for storing the certificate ID obtained from the server. */
         certificateIdTokenContext->pCertificateIdBuffer =
             IotTest_Malloc( pResponseInfo->u.acceptedResponse.certificateIdLength + 1 );
+        TEST_ASSERT_NOT_NULL( certificateIdTokenContext->pCertificateIdBuffer );
 
         /* Copy the certificate ID into the buffer. */
         if( certificateIdTokenContext->pCertificateIdBuffer != NULL )
@@ -243,6 +270,7 @@ static void _storeDataFromKeysAndCertResponseCallback( void * contextParam,
         /* Allocate buffer space for storing the ownership token string obtained from the server. */
         certificateIdTokenContext->pCertificateOwnershipToken =
             IotTest_Malloc( pResponseInfo->u.acceptedResponse.ownershipTokenLength + 1 );
+        TEST_ASSERT_NOT_NULL( certificateIdTokenContext->pCertificateOwnershipToken );
 
         /* Copy the ownership token into the buffer. */
         if( certificateIdTokenContext->pCertificateOwnershipToken != NULL )
@@ -267,6 +295,10 @@ static void _storeDataFromKeysAndCertResponseCallback( void * contextParam,
 
 /*-----------------------------------------------------------*/
 
+/**
+ * @brief Callback for the CertificateFromCsr operation for copying the server provided
+ * credentials in buffers for use in RegisterThing test.
+ */
 static void _storeDataOfCerFromCsrResponseCallback( void * contextParam,
                                                     const AwsIotProvisioningCreateCertFromCsrResponse_t * pResponseInfo )
 {
@@ -280,6 +312,7 @@ static void _storeDataOfCerFromCsrResponseCallback( void * contextParam,
         /* Allocate buffer space for storing the certificate ID obtained from the server. */
         contextData->pCertificateIdBuffer =
             IotTest_Malloc( pResponseInfo->u.acceptedResponse.certIdLength + 1 );
+        TEST_ASSERT_NOT_NULL( contextData->pCertificateIdBuffer );
 
         /* Copy the certificate ID into the buffer. */
         if( contextData->pCertificateIdBuffer != NULL )
@@ -297,6 +330,7 @@ static void _storeDataOfCerFromCsrResponseCallback( void * contextParam,
         /* Allocate buffer space for storing the ownership token string obtained from the server. */
         contextData->pCertificateOwnershipToken =
             IotTest_Malloc( pResponseInfo->u.acceptedResponse.ownershipTokenLength + 1 );
+        TEST_ASSERT_NOT_NULL( contextData->pCertificateOwnershipToken );
 
         /* Copy the ownership token into the buffer. */
         if( contextData->pCertificateOwnershipToken != NULL )
@@ -328,7 +362,7 @@ static void _printRegisterThingResponseCallback( void * contextParam,
                                                  const AwsIotProvisioningRegisterThingResponse_t * pResponseInfo )
 {
     ( void ) contextParam;
-    AwsIotProvisioning_Assert( pResponseInfo != NULL );
+    TEST_ASSERT_NOT_NULL( pResponseInfo );
 
     IotLogInfo( "\n Status Code = %d\n", pResponseInfo->statusCode );
 
@@ -486,6 +520,7 @@ TEST_GROUP_RUNNER( Provisioning_System )
 {
     RUN_TEST_CASE( Provisioning_System, CreateKeysAndCertificateNominalCase );
     RUN_TEST_CASE( Provisioning_System, CreateCertFromCsrNominalCase );
+    RUN_TEST_CASE( Provisioning_System, CreateCertFromCsrWithInvalidCsr );
     RUN_TEST_CASE( Provisioning_System, RegisterThingWithKeysAndCertNominalCase );
     RUN_TEST_CASE( Provisioning_System, RegisterThingWithCertFromCsrNominalCase );
 }
@@ -493,9 +528,8 @@ TEST_GROUP_RUNNER( Provisioning_System )
 /*-----------------------------------------------------------*/
 
 /**
- * @brief Tests the behavior of the CreateKeysAndCertificate API in
- * the nominal (or success) case where the server responds within the specified
- * timeout period.
+ * @brief Verifies the behavior of the CreateKeysAndCertificate API in making
+ * a request with AWS IoT Core for creation of key-pair and certificate.
  */
 TEST( Provisioning_System, CreateKeysAndCertificateNominalCase )
 {
@@ -538,8 +572,33 @@ TEST( Provisioning_System, CreateCertFromCsrNominalCase )
 }
 
 /**
+ * @brief Verifies that the CreateCertificateFromCsr API returns an error and correctly
+ * parses a rejected server response server when called with an invalid CSR string.
+ */
+TEST( Provisioning_System, CreateCertFromCsrWithInvalidCsr )
+{
+    AwsIotProvisioningError_t status = AWS_IOT_PROVISIONING_SUCCESS;
+    AwsIotProvisioningCreateCertFromCsrCallbackInfo_t callbackInfo =
+    {
+        .userParam = NULL,
+        .function  = _checkInvalidCsrServerResponseCallback
+    };
+
+    const char * pInvalidCsr = "GibberishCsr";
+
+    status = AwsIotProvisioning_CreateCertificateFromCsr( _mqttConnection,
+                                                          IOT_MQTT_QOS_1,
+                                                          pInvalidCsr,
+                                                          strlen( pInvalidCsr ),
+                                                          AWS_IOT_TEST_PROVISIONING_TIMEOUT,
+                                                          &callbackInfo );
+
+    TEST_ASSERT_EQUAL( AWS_IOT_PROVISIONING_SERVER_REFUSED, status );
+}
+
+/**
  * @brief Tests the behavior of the RegisterThing API function in the workflow when
- * keys are generated by generated through the CreateKeysAndCertificate API
+ * keys are generated through the CreateKeysAndCertificate API.
  */
 TEST( Provisioning_System, RegisterThingWithKeysAndCertNominalCase )
 {
@@ -599,8 +658,15 @@ TEST( Provisioning_System, RegisterThingWithKeysAndCertNominalCase )
     /* Test Cleanup */
 
     /* Release the certificate data buffers. */
-    IotTest_Free( newCertificateContext.pCertificateIdBuffer );
-    IotTest_Free( newCertificateContext.pCertificateOwnershipToken );
+    if( newCertificateContext.pCertificateIdBuffer != NULL )
+    {
+        IotTest_Free( newCertificateContext.pCertificateIdBuffer );
+    }
+
+    if( newCertificateContext.pCertificateOwnershipToken != NULL )
+    {
+        IotTest_Free( newCertificateContext.pCertificateOwnershipToken );
+    }
 }
 
 /**
@@ -669,6 +735,13 @@ TEST( Provisioning_System, RegisterThingWithCertFromCsrNominalCase )
     /* Test Cleanup */
 
     /* Release the certificate data buffers. */
-    IotTest_Free( newCertificateContext.pCertificateIdBuffer );
-    IotTest_Free( newCertificateContext.pCertificateOwnershipToken );
+    if( newCertificateContext.pCertificateIdBuffer != NULL )
+    {
+        IotTest_Free( newCertificateContext.pCertificateIdBuffer );
+    }
+
+    if( newCertificateContext.pCertificateOwnershipToken != NULL )
+    {
+        IotTest_Free( newCertificateContext.pCertificateOwnershipToken );
+    }
 }
