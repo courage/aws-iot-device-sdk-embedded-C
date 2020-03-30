@@ -156,8 +156,11 @@ if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then
         } \
     }"
 
-    # Compiler flags for integration and units tests.
-    COMMON_CMAKE_C_FLAGS="$AWS_IOT_CREDENTIAL_DEFINES -DAWS_IOT_TEST_PROVISIONING_CSR_PEM=\"$CSR_FILE\""
+    # Save the generated CSR for testing.
+    CSR_PEM_DATA=$(cat $CSR_FILE)
+
+    # Compiler flags for integration and unit tests.
+    COMMON_CMAKE_C_FLAGS="$AWS_IOT_CREDENTIAL_DEFINES -DAWS_IOT_TEST_PROVISIONING_CSR_PEM=\"$CSR_PEM_DATA\""
     COMMON_CMAKE_C_FLAGS+="-DAWS_IOT_TEST_PROVISIONING_TEMPLATE_NAME=\"\\\"$TEMPLATE_NAME\\\"\" -DAWS_IOT_TEST_PROVISIONING_TEMPLATE_PARAMETERS=\"$PROVISIONING_PARAMETERS\" $COMPILER_OPTIONS"
 
     # Run teardown routine if we ever encounter a failure for best effort to cleanup resources on the AWS IoT account.
