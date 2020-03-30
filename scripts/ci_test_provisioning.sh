@@ -28,7 +28,7 @@ run_tests() {
 }
 
 TEMPLATE_NAME="CI_SYSTEM_TEST_TEMPLATE"
-PROVISIONING_ROLE_NAME="CI_SYSTEM_TEST_ROLE\"\""
+PROVISIONING_ROLE_NAME="CI_SYSTEM_TEST_ROLE"
 CSR_FILE=./system_test_csr.csr
 GAMMA_ENDPOINT=https://gamma.us-east-1.iot.amazonaws.com \
 
