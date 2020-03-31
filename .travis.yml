@@ -1,7 +1,7 @@
 # Only run on the feat/csr-in-fleet-provisioning branch for now.
 branches:
   only:
-  - feat/csr-in-fleet-provisioning
+  - test/running-provisioning-with-csr-on-ci
 
 # Build on Ubuntu 16.04 by default.
 os: linux
@@ -32,15 +32,7 @@ jobs:
 
     # Library tests.
     - stage: Tests
-      env: RUN_TEST=common
-    - env: RUN_TEST=mqtt NETWORK_STACK=mbedtls
-    - env: RUN_TEST=mqtt NETWORK_STACK=openssl
-    - env: RUN_TEST=shadow
-    - env: RUN_TEST=jobs
     - env: RUN_TEST=provisioning AWS_PROVISIONING_REGION=us-east-1
-    - if: type = push
-      compiler: gcc
-      env: RUN_TEST=coverage
 
 # Install dependencies.
 install:
