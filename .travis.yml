@@ -71,11 +71,13 @@ script:
         export AWS_IOT_CREDENTIAL_DEFINES="-DIOT_TEST_SERVER=\"\\\"$AWS_IOT_ENDPOINT\\\"\" -DIOT_TEST_PORT=443 -DIOT_TEST_ROOT_CA=\"\\\"../credentials/AmazonRootCA1.pem\\\"\" -DIOT_TEST_CLIENT_CERT=\"\\\"../credentials/clientCert.pem\\\"\" -DIOT_TEST_PRIVATE_KEY=\"\\\"../credentials/privateKey.pem\\\"\"";
       fi
     fi
+  - cat credentials/privateKey.pem 
+  - cat credentials/clientCert.pem
   # Create build directory.
   - mkdir build
   - cd build
   # Run test script.
-  - bash ../scripts/ci_test_$RUN_TEST.sh
+  #bash ../scripts/ci_test_$RUN_TEST.sh
 
 after_success:
   # Submit coverage results.
