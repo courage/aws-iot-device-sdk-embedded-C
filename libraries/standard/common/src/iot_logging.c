@@ -185,10 +185,7 @@ static const char * const _pLogLevelStrings[ 5 ] =
 
 /*-----------------------------------------------------------*/
 
-void IotLog_Generic( int32_t libraryLogSetting,
-                     const char * const pLibraryName,
-                     int32_t messageLevel,
-                     const IotLogConfig_t * const pLogConfig,
+void IotLog_Generic( int32_t messageLevel,
                      const char * const pFormat,
                      ... )
 {
@@ -198,31 +195,16 @@ void IotLog_Generic( int32_t libraryLogSetting,
     char * pLoggingBuffer = NULL;
     va_list args;
 
-    /* If the library's log level setting is lower than the message level,
-     * return without doing anything. */
-    if( ( messageLevel == 0 ) || ( messageLevel > libraryLogSetting ) )
+    if( messageLevel == 0 )
     {
         return;
     }
 
-    if( ( pLogConfig == NULL ) || ( pLogConfig->hideLogLevel == false ) )
-    {
-        /* Add length of log level if requested. */
-        bufferSize += MAX_LOG_LEVEL_LENGTH;
-    }
+    /* Add length of log level if requested. */
+    bufferSize += MAX_LOG_LEVEL_LENGTH;
 
-    /* Estimate the amount of buffer needed for this log message. */
-    if( ( pLogConfig == NULL ) || ( pLogConfig->hideLibraryName == false ) )
-    {
-        /* Add size of library name if requested. Add 2 to accommodate "[]". */
-        bufferSize += strlen( pLibraryName ) + 2;
-    }
-
-    if( ( pLogConfig == NULL ) || ( pLogConfig->hideTimestring == false ) )
-    {
-        /* Add length of timestring if requested. */
-        bufferSize += MAX_TIMESTRING_LENGTH;
-    }
+    /* Add length of timestring. */
+    bufferSize += MAX_TIMESTRING_LENGTH;
 
     /* Add 64 as an initial (arbitrary) guess for the length of the message. */
     bufferSize += 64;
@@ -249,39 +231,15 @@ void IotLog_Generic( int32_t libraryLogSetting,
         return;
     }
 
-    /* Print the message log level if requested. */
-    if( ( pLogConfig == NULL ) || ( pLogConfig->hideLogLevel == false ) )
+    /* Print the message log level. */
+    /* Ensure that message level is valid. */
+    if( ( messageLevel >= IOT_LOG_NONE ) && ( messageLevel <= IOT_LOG_DEBUG ) )
     {
-        /* Ensure that message level is valid. */
-        if( ( messageLevel >= IOT_LOG_NONE ) && ( messageLevel <= IOT_LOG_DEBUG ) )
-        {
-            /* Add the log level string to the logging buffer. */
-            requiredMessageSize = snprintf( pLoggingBuffer + bufferPosition,
-                                            bufferSize - bufferPosition,
-                                            "[%s]",
-                                            _pLogLevelStrings[ messageLevel ] );
-
-            /* Check for encoding errors. */
-            if( requiredMessageSize <= 0 )
-            {
-                IotLogging_Free( pLoggingBuffer );
-
-                return;
-            }
-
-            /* Update the buffer position. */
-            bufferPosition += ( size_t ) requiredMessageSize;
-        }
-    }
-
-    /* Print the library name if requested. */
-    if( ( pLogConfig == NULL ) || ( pLogConfig->hideLibraryName == false ) )
-    {
-        /* Add the library name to the logging buffer. */
+        /* Add the log level string to the logging buffer. */
         requiredMessageSize = snprintf( pLoggingBuffer + bufferPosition,
                                         bufferSize - bufferPosition,
                                         "[%s]",
-                                        pLibraryName );
+                                        _pLogLevelStrings[ messageLevel ] );
 
         /* Check for encoding errors. */
         if( requiredMessageSize <= 0 )
@@ -296,30 +254,27 @@ void IotLog_Generic( int32_t libraryLogSetting,
     }
 
     /* Print the timestring if requested. */
-    if( ( pLogConfig == NULL ) || ( pLogConfig->hideTimestring == false ) )
-    {
-        /* Add the opening '[' enclosing the timestring. */
-        pLoggingBuffer[ bufferPosition ] = '[';
-        bufferPosition++;
+    /* Add the opening '[' enclosing the timestring. */
+    pLoggingBuffer[ bufferPosition ] = '[';
+    bufferPosition++;
 
-        /* Generate the timestring and add it to the buffer. */
-        if( IotClock_GetTimestring( pLoggingBuffer + bufferPosition,
-                                    bufferSize - bufferPosition,
-                                    &timestringLength ) == true )
-        {
-            /* If the timestring was successfully generated, add the closing "]". */
-            bufferPosition += timestringLength;
-            pLoggingBuffer[ bufferPosition ] = ']';
-            bufferPosition++;
-        }
-        else
-        {
-            /* Sufficient memory for a timestring should have been allocated. A timestring
-             * probably failed to generate due to a clock read error; remove the opening '['
-             * from the logging buffer. */
-            bufferPosition--;
-            pLoggingBuffer[ bufferPosition ] = '\0';
-        }
+    /* Generate the timestring and add it to the buffer. */
+    if( IotClock_GetTimestring( pLoggingBuffer + bufferPosition,
+                                bufferSize - bufferPosition,
+                                &timestringLength ) == true )
+    {
+        /* If the timestring was successfully generated, add the closing "]". */
+        bufferPosition += timestringLength;
+        pLoggingBuffer[ bufferPosition ] = ']';
+        bufferPosition++;
+    }
+    else
+    {
+        /* Sufficient memory for a timestring should have been allocated. A timestring
+         * probably failed to generate due to a clock read error; remove the opening '['
+         * from the logging buffer. */
+        bufferPosition--;
+        pLoggingBuffer[ bufferPosition ] = '\0';
     }
 
     /* Add a padding space between the last closing ']' and the message, unless

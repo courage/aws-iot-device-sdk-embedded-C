@@ -179,18 +179,17 @@
 #else
     /* Define IotLog if the log level is greater than "none". */
     #if LIBRARY_LOG_LEVEL > IOT_LOG_NONE
-        #define IotLog( messageLevel, pLogConfig, ... )   \
-                IotLog_Generic( LIBRARY_LOG_LEVEL,        \
-                                LIBRARY_LOG_NAME,         \
-                                messageLevel,             \
-                                pLogConfig,               \
+        #define IotLog( messageLevel, pFormat, ... )   \
+                IotLog_Generic( messageLevel,          \
+                                "[%s] "pFormat,        \
+                                LIBRARY_LOG_NAME,      \
                                 __VA_ARGS__ )
 
         /* Define the abbreviated logging macros. */
-        #define IotLogError( ...  )    IotLog( IOT_LOG_ERROR, NULL, __VA_ARGS__ )
-        #define IotLogWarn( ... )      IotLog( IOT_LOG_WARN, NULL, __VA_ARGS__ )
-        #define IotLogInfo( ... )      IotLog( IOT_LOG_INFO, NULL, __VA_ARGS__ )
-        #define IotLogDebug( ... )     IotLog( IOT_LOG_DEBUG, NULL, __VA_ARGS__ )
+        #define IotLogError( pFormat, ...  )    IotLog( IOT_LOG_ERROR,  pFormat , __VA_ARGS__ )
+        #define IotLogWarn(  pFormat, ... )      IotLog( IOT_LOG_WARN, pFormat , __VA_ARGS__ )
+        #define IotLogInfo(  pFormat, ... )      IotLog( IOT_LOG_INFO,  pFormat , __VA_ARGS__ )
+        #define IotLogDebug( pFormat, ... )     IotLog( IOT_LOG_DEBUG, pFormat , __VA_ARGS__ )
 
         /* If log level is DEBUG, enable the function to print buffers. */
         #if LIBRARY_LOG_LEVEL >= IOT_LOG_DEBUG

@@ -80,12 +80,12 @@ static IotMqttError_t _checkRemainingLength( const _mqttPacket_t * pPublish,
  * @brief If logging is enabled, define a log configuration that only prints the log
  * string. This is used when printing out details of deserialized MQTT packets.
  */
-    static const IotLogConfig_t _logHideAll =
-    {
-        .hideLibraryName = ( bool ) ( true ),
-        .hideLogLevel    = ( bool ) ( true ),
-        .hideTimestring  = ( bool ) ( true )
-    };
+    /* static const IotLogConfig_t _logHideAll = */
+    /* { */
+    /*     .hideLibraryName = ( bool ) ( true ), */
+    /*     .hideLogLevel    = ( bool ) ( true ), */
+    /*     .hideTimestring  = ( bool ) ( true ) */
+    /* }; */
 #endif
 
 
@@ -118,7 +118,6 @@ static IotMqttError_t _decodeSubackStatus( size_t statusCount,
                  * stdint.h being available. */
                 /* coverity[misra_c_2012_directive_4_6_violation] */
                 IotLog( IOT_LOG_DEBUG,
-                        &_logHideAll,
                         "Topic filter %lu accepted, max QoS %hhu.",
                         ( unsigned long ) i, subscriptionStatus );
                 break;
@@ -131,7 +130,6 @@ static IotMqttError_t _decodeSubackStatus( size_t statusCount,
                  * stdint.h being available. */
                 /* coverity[misra_c_2012_directive_4_6_violation] */
                 IotLog( IOT_LOG_DEBUG,
-                        &_logHideAll,
                         "Topic filter %lu refused.", ( unsigned long ) i );
 
                 /* Remove a rejected subscription from the subscription manager. */
@@ -145,7 +143,6 @@ static IotMqttError_t _decodeSubackStatus( size_t statusCount,
 
             default:
                 IotLog( IOT_LOG_DEBUG,
-                        &_logHideAll,
                         "Bad SUBSCRIBE status %hhu.", subscriptionStatus );
 
                 status = IOT_MQTT_BAD_RESPONSE;
@@ -178,7 +175,6 @@ static IotMqttError_t _checkRemainingLength( const _mqttPacket_t * pPublish,
         if( pPublish->remainingLength < qos0Minimum )
         {
             IotLog( IOT_LOG_DEBUG,
-                    &_logHideAll,
                     "QoS 0 PUBLISH cannot have a remaining length less than %lu.",
                     qos0Minimum );
 
@@ -193,7 +189,6 @@ static IotMqttError_t _checkRemainingLength( const _mqttPacket_t * pPublish,
         if( pPublish->remainingLength < ( qos0Minimum + 2U ) )
         {
             IotLog( IOT_LOG_DEBUG,
-                    &_logHideAll,
                     "QoS 1 or 2 PUBLISH cannot have a remaining length less than %lu.",
                     qos0Minimum + 2U );
 
@@ -351,7 +346,6 @@ IotMqttError_t _IotMqtt_DeserializeConnack( _mqttPacket_t * pConnack )
     if( pConnack->type != MQTT_PACKET_TYPE_CONNACK )
     {
         IotLog( IOT_LOG_ERROR,
-                &_logHideAll,
                 "Bad control packet type 0x%02x.",
                 pConnack->type );
 
@@ -363,7 +357,6 @@ IotMqttError_t _IotMqtt_DeserializeConnack( _mqttPacket_t * pConnack )
     else if( pConnack->remainingLength != MQTT_PACKET_CONNACK_REMAINING_LENGTH )
     {
         IotLog( IOT_LOG_ERROR,
-                &_logHideAll,
                 "CONNACK does not have remaining length of %d.",
                 MQTT_PACKET_CONNACK_REMAINING_LENGTH );
 
@@ -375,7 +368,6 @@ IotMqttError_t _IotMqtt_DeserializeConnack( _mqttPacket_t * pConnack )
     else if( ( pRemainingData[ 0 ] | 0x01U ) != 0x01U )
     {
         IotLog( IOT_LOG_ERROR,
-                &_logHideAll,
                 "Reserved bits in CONNACK incorrect." );
 
         status = IOT_MQTT_BAD_RESPONSE;
@@ -388,7 +380,6 @@ IotMqttError_t _IotMqtt_DeserializeConnack( _mqttPacket_t * pConnack )
             == MQTT_PACKET_CONNACK_SESSION_PRESENT_MASK )
         {
             IotLog( IOT_LOG_DEBUG,
-                    &_logHideAll,
                     "CONNACK session present bit set." );
 
             /* MQTT 3.1.1 specifies that the fourth byte in CONNACK must be 0 if the
@@ -401,7 +392,6 @@ IotMqttError_t _IotMqtt_DeserializeConnack( _mqttPacket_t * pConnack )
         else
         {
             IotLog( IOT_LOG_DEBUG,
-                    &_logHideAll,
                     "CONNACK session present bit not set." );
         }
     }
@@ -412,7 +402,6 @@ IotMqttError_t _IotMqtt_DeserializeConnack( _mqttPacket_t * pConnack )
         if( pRemainingData[ 1 ] > 5U )
         {
             IotLog( IOT_LOG_DEBUG,
-                    &_logHideAll,
                     "CONNACK response %hhu is not valid.",
                     pRemainingData[ 1 ] );
 
@@ -424,7 +413,6 @@ IotMqttError_t _IotMqtt_DeserializeConnack( _mqttPacket_t * pConnack )
              * enabled. */
             #if LIBRARY_LOG_LEVEL > IOT_LOG_NONE
                 IotLog( IOT_LOG_DEBUG,
-                        &_logHideAll,
                         "%s",
                         pConnackResponses[ pRemainingData[ 1 ] ] );
             #endif
@@ -576,7 +564,6 @@ IotMqttError_t _IotMqtt_DeserializePublish( _mqttPacket_t * pPublish )
         pOutput->pTopicName = ( const char * ) ( pVariableHeader + sizeof( uint16_t ) );
 
         IotLog( IOT_LOG_DEBUG,
-                &_logHideAll,
                 "Topic name length %hu: %.*s",
                 pOutput->topicNameLength,
                 pOutput->topicNameLength,
@@ -591,7 +578,6 @@ IotMqttError_t _IotMqtt_DeserializePublish( _mqttPacket_t * pPublish )
             pPublish->packetIdentifier = UINT16_DECODE( pPacketIdentifierHigh );
 
             IotLog( IOT_LOG_DEBUG,
-                    &_logHideAll,
                     "Packet identifier %hu.", pPublish->packetIdentifier );
 
             /* Packet identifier cannot be 0. */
@@ -618,7 +604,6 @@ IotMqttError_t _IotMqtt_DeserializePublish( _mqttPacket_t * pPublish )
         }
 
         IotLog( IOT_LOG_DEBUG,
-                &_logHideAll,
                 "Payload length %hu.", pOutput->payloadLength );
     }
 
@@ -671,7 +656,6 @@ IotMqttError_t _IotMqtt_DeserializePuback( _mqttPacket_t * pPuback )
     if( pPuback->remainingLength != MQTT_PACKET_PUBACK_REMAINING_LENGTH )
     {
         IotLog( IOT_LOG_ERROR,
-                &_logHideAll,
                 "PUBACK does not have remaining length of %d.",
                 MQTT_PACKET_PUBACK_REMAINING_LENGTH );
 
@@ -683,7 +667,6 @@ IotMqttError_t _IotMqtt_DeserializePuback( _mqttPacket_t * pPuback )
         pPuback->packetIdentifier = UINT16_DECODE( pPuback->pRemainingData );
 
         IotLog( IOT_LOG_DEBUG,
-                &_logHideAll,
                 "Packet identifier %hu.", pPuback->packetIdentifier );
 
         /* Packet identifier cannot be 0. */
@@ -698,7 +681,6 @@ IotMqttError_t _IotMqtt_DeserializePuback( _mqttPacket_t * pPuback )
             if( pPuback->type != MQTT_PACKET_TYPE_PUBACK )
             {
                 IotLog( IOT_LOG_ERROR,
-                        &_logHideAll,
                         "Bad control packet type 0x%02x.",
                         pPuback->type );
 
@@ -784,7 +766,6 @@ IotMqttError_t _IotMqtt_DeserializeSuback( _mqttPacket_t * pSuback )
     if( remainingLength < 3U )
     {
         IotLog( IOT_LOG_DEBUG,
-                &_logHideAll,
                 "SUBACK cannot have a remaining length less than 3." );
 
         status = IOT_MQTT_BAD_RESPONSE;
@@ -795,7 +776,6 @@ IotMqttError_t _IotMqtt_DeserializeSuback( _mqttPacket_t * pSuback )
         pSuback->packetIdentifier = UINT16_DECODE( pVariableHeader );
 
         IotLog( IOT_LOG_DEBUG,
-                &_logHideAll,
                 "Packet identifier %hu.", pSuback->packetIdentifier );
 
         /* Check that the control packet type is 0x90 (this must be done after the
@@ -803,7 +783,6 @@ IotMqttError_t _IotMqtt_DeserializeSuback( _mqttPacket_t * pSuback )
         if( pSuback->type != MQTT_PACKET_TYPE_SUBACK )
         {
             IotLog( IOT_LOG_ERROR,
-                    &_logHideAll,
                     "Bad control packet type 0x%02x.",
                     pSuback->type );
 
@@ -891,7 +870,6 @@ IotMqttError_t _IotMqtt_DeserializeUnsuback( _mqttPacket_t * pUnsuback )
     if( pUnsuback->remainingLength != MQTT_PACKET_UNSUBACK_REMAINING_LENGTH )
     {
         IotLog( IOT_LOG_ERROR,
-                &_logHideAll,
                 "UNSUBACK does not have remaining length of %d.",
                 MQTT_PACKET_UNSUBACK_REMAINING_LENGTH );
 
@@ -912,7 +890,6 @@ IotMqttError_t _IotMqtt_DeserializeUnsuback( _mqttPacket_t * pUnsuback )
     if( status == IOT_MQTT_SUCCESS )
     {
         IotLog( IOT_LOG_DEBUG,
-                &_logHideAll,
                 "Packet identifier %hu.", pUnsuback->packetIdentifier );
 
         /* Check that the control packet type is 0xb0 (this must be done after the
@@ -920,7 +897,6 @@ IotMqttError_t _IotMqtt_DeserializeUnsuback( _mqttPacket_t * pUnsuback )
         if( pUnsuback->type != MQTT_PACKET_TYPE_UNSUBACK )
         {
             IotLog( IOT_LOG_ERROR,
-                    &_logHideAll,
                     "Bad control packet type 0x%02x.",
                     pUnsuback->type );
 
@@ -968,7 +944,6 @@ IotMqttError_t _IotMqtt_DeserializePingresp( _mqttPacket_t * pPingresp )
     if( pPingresp->type != MQTT_PACKET_TYPE_PINGRESP )
     {
         IotLog( IOT_LOG_ERROR,
-                &_logHideAll,
                 "Bad control packet type 0x%02x.",
                 pPingresp->type );
 
@@ -978,7 +953,6 @@ IotMqttError_t _IotMqtt_DeserializePingresp( _mqttPacket_t * pPingresp )
     else if( pPingresp->remainingLength != MQTT_PACKET_PINGRESP_REMAINING_LENGTH )
     {
         IotLog( IOT_LOG_ERROR,
-                &_logHideAll,
                 "PINGRESP does not have remaining length of %d.",
                 MQTT_PACKET_PINGRESP_REMAINING_LENGTH );
 

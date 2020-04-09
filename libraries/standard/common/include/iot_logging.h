@@ -109,47 +109,6 @@
 #define IOT_LOG_DEBUG    4
 
 /**
- * @paramstructs{logging,logging}
- */
-
-/**
- * @ingroup logging_datatypes_paramstructs
- * @brief Log message configuration struct.
- *
- * @paramfor @ref logging_function_log, @ref logging_function_generic
- *
- * By default, log messages print the library name, log level, and a timestring.
- * This struct can be passed to @ref logging_function_generic to disable one of
- * the above components in the log message.
- *
- * <b>Example:</b>
- *
- * @code{c}
- * IotLog_Generic( IOT_LOG_DEBUG, "SAMPLE", IOT_LOG_DEBUG, NULL, "Hello world!" );
- * @endcode
- * The code above prints the following message:
- * @code
- * [DEBUG][SAMPLE][2018-01-01 12:00:00] Hello world!
- * @endcode
- *
- * The timestring can be disabled as follows:
- * @code
- * IotLogConfig_t logConfig = { .hideLogLevel = false, .hideLibraryName = false, .hideTimestring = true};
- * IotLog_Generic( IOT_LOG_DEBUG, "SAMPLE", IOT_LOG_DEBUG, &logConfig, "Hello world!" );
- * @endcode
- * The resulting log message will be:
- * @code
- * [DEBUG][SAMPLE] Hello world!
- * @endcode
- */
-typedef struct IotLogConfig
-{
-    bool hideLogLevel;    /**< @brief Don't print the log level string for this message. */
-    bool hideLibraryName; /**< @brief Don't print the library name for this message. */
-    bool hideTimestring;  /**< @brief Don't print the timestring for this message. */
-} IotLogConfig_t;
-
-/**
  * @functionspage{logging,logging library}
  *
  * - @functionname{logging_function_log}
@@ -174,22 +133,14 @@ typedef struct IotLogConfig
  * In most cases, the library-specific logging function @ref logging_function_log
  * should be called instead of this function.
  *
- * @param[in] libraryLogSetting The log level setting of the library, used to
- * determine if the log message should be printed. Must be one of the @ref
- * logging_constants_levels.
- * @param[in] pLibraryName The library name to print. See @ref LIBRARY_LOG_NAME.
  * @param[in] messageLevel The log level of the this message. See @ref LIBRARY_LOG_LEVEL.
- * @param[in] pLogConfig Pointer to a #IotLogConfig_t. Optional; pass `NULL` to ignore.
  * @param[in] pFormat Format string for the log message.
  * @param[in] ... Arguments for format specification.
  *
  * @return No return value. On errors, it prints nothing.
  */
 /* @[declare_logging_generic] */
-void IotLog_Generic( int32_t libraryLogSetting,
-                     const char * const pLibraryName,
-                     int32_t messageLevel,
-                     const IotLogConfig_t * const pLogConfig,
+void IotLog_Generic( int32_t messageLevel,
                      const char * const pFormat,
                      ... );
 /* @[declare_logging_generic] */
