@@ -126,114 +126,155 @@
  */
 
 /**
- * @def IotLogError( ...  )
- * @brief Abbreviated logging macro for level #IOT_LOG_ERROR.
+ * @def IotLogError( message  )
+ * @brief Abbreviated logging macro for stand-alone message strings at level #IOT_LOG_ERROR.
  *
  * Equivalent to:
  * @code{c}
- * IotLog( IOT_LOG_ERROR, NULL, ... )
+ * IotLogWithArgs( IOT_LOG_ERROR, message )
  * @endcode
  */
 
 /**
- * @def IotLogWarn( ...  )
- * @brief Abbreviated logging macro for level #IOT_LOG_WARN.
+ * @def IotLogErrorWithArgs( ...  )
+ * @brief Abbreviated logging macro for messages with arguments at level #IOT_LOG_ERROR.
  *
  * Equivalent to:
  * @code{c}
- * IotLog( IOT_LOG_WARN, NULL, ... )
+ * IotLog( IOT_LOG_ERROR, ... )
  * @endcode
  */
 
 /**
- * @def IotLogInfo( ...  )
- * @brief Abbreviated logging macro for level #IOT_LOG_INFO.
+ * @def IotLogWarn( message  )
+ * @brief Abbreviated logging macro for stand-alone message strings at level #IOT_LOG_WARN.
  *
  * Equivalent to:
  * @code{c}
- * IotLog( IOT_LOG_INFO, NULL, ... )
+ * IotLog( IOT_LOG_WARN, message )
  * @endcode
  */
 
 /**
- * @def IotLogDebug( ...  )
- * @brief Abbreviated logging macro for level #IOT_LOG_DEBUG.
+ * @def IotLogWarnWithArgs( ...  )
+ * @brief Abbreviated logging macro for messages with arguments at level #IOT_LOG_WARN.
  *
  * Equivalent to:
  * @code{c}
- * IotLog( IOT_LOG_DEBUG, NULL, ... )
+ * IotLog( IOT_LOG_WARN, ... )
  * @endcode
  */
+
+/**
+ * @def IotLogInfo( message  )
+ * @brief Abbreviated logging macro for stand-alone message strings at level #IOT_LOG_INFO.
+ *
+ * Equivalent to:
+ * @code{c}
+ * IotLog( IOT_LOG_INFO, message )
+ * @endcode
+ */
+
+/**
+ * @def IotLogInfoWithArgs( ...  )
+ * @brief Abbreviated logging macro for messages with arguments at level #IOT_LOG_INFO.
+ *
+ * Equivalent to:
+ * @code{c}
+ * IotLog( IOT_LOG_INFO, ... )
+ * @endcode
+ */
+
+/**
+ * @def IotLogDebug( message  )
+ * @brief Abbreviated logging macro for stand-alone message strings at level #IOT_LOG_DEBUG.
+ *
+ * Equivalent to:
+ * @code{c}
+ * IotLog( IOT_LOG_DEBUG, message )
+ * @endcode
+ */
+
+/**
+ * @def IotLogDebugWithArgs( ...  )
+ * @brief Abbreviated logging macro for messages with arguments at level #IOT_LOG_DEBUG.
+ *
+ * Equivalent to:
+ * @code{c}
+ * IotLog( IOT_LOG_DEBUG, ... )
+ * @endcode
+ */
+
+/* Define metadata information to add in log depending on verbosity configuration. */
+#if !defined( IotLog )
+    #define IotLog( messageLevel, pFormat, ... ) \
+    IotLog_Generic( messageLevel,                \
+                    "[%s:%d] [%s] "pFormat,      \
+                    __FILE__,                    \
+                    __LINE__,                    \
+                    LIBRARY_LOG_NAME,            \
+                    ## __VA_ARGS__ )
+#endif
 
 /* Check that LIBRARY_LOG_LEVEL is defined and has a valid value. */
-#if !defined( LIBRARY_LOG_LEVEL ) ||            \
-    ( ( LIBRARY_LOG_LEVEL != IOT_LOG_NONE ) &&  \
-      ( LIBRARY_LOG_LEVEL != IOT_LOG_ERROR ) && \
-      ( LIBRARY_LOG_LEVEL != IOT_LOG_WARN ) &&  \
-      ( LIBRARY_LOG_LEVEL != IOT_LOG_INFO ) &&  \
-      ( LIBRARY_LOG_LEVEL != IOT_LOG_DEBUG ) )
+#if !defined( LIBRARY_LOG_LEVEL ) ||           \
+    ( ( LIBRARY_LOG_LEVEL != IOT_LOG_NONE ) && \
+    ( LIBRARY_LOG_LEVEL != IOT_LOG_ERROR ) &&  \
+    ( LIBRARY_LOG_LEVEL != IOT_LOG_WARN ) &&   \
+    ( LIBRARY_LOG_LEVEL != IOT_LOG_INFO ) &&   \
+    ( LIBRARY_LOG_LEVEL != IOT_LOG_DEBUG ) )
     #error "Please define LIBRARY_LOG_LEVEL as either IOT_LOG_NONE, IOT_LOG_ERROR, IOT_LOG_WARN, IOT_LOG_INFO, or IOT_LOG_DEBUG."
 /* Check that LIBRARY_LOG_NAME is defined and has a valid value. */
 #elif !defined( LIBRARY_LOG_NAME )
     #error "Please define LIBRARY_LOG_NAME."
-#else
+#else /* if !defined( LIBRARY_LOG_LEVEL ) || ( ( LIBRARY_LOG_LEVEL != IOT_LOG_NONE ) && ( LIBRARY_LOG_LEVEL != IOT_LOG_ERROR ) && ( LIBRARY_LOG_LEVEL != IOT_LOG_WARN ) && ( LIBRARY_LOG_LEVEL != IOT_LOG_INFO ) && ( LIBRARY_LOG_LEVEL != IOT_LOG_DEBUG ) ) */
+    #if LIBRARY_LOG_LEVEL >= IOT_LOG_DEBUG
+        /* All log levels will logged. */
+        #define IotLogError( pFormat, ... )    IotLog( IOT_LOG_ERROR, pFormat, ## __VA_ARGS__ )
+        #define IotLogWarn( pFormat, ... )     IotLog( IOT_LOG_WARN, pFormat, ## __VA_ARGS__ )
+        #define IotLogInfo( pFormat, ... )     IotLog( IOT_LOG_INFO, pFormat, ## __VA_ARGS__ )
+        #define IotLogDebug( pFormat, ... )    IotLog( IOT_LOG_DEBUG, pFormat, ## __VA_ARGS__ )
 
-    #if LIBRARY_LOG_LEVEL > IOT_LOG_NONE
-        /* Define IotLog if the log level is greater than "none". */
-        #define IotLog( messageLevel, pFormat, ... )   \
-                IotLog_Generic( messageLevel,          \
-                                "[%s] "pFormat,        \
-                                LIBRARY_LOG_NAME,      \
-                                ##__VA_ARGS__ )
-
-        #if LIBRARY_LOG_LEVEL >= IOT_LOG_DEBUG
-            /* All log levels will logged. */
-            #define IotLogError( pFormat, ...  )    IotLog( IOT_LOG_ERROR, pFormat,  ##__VA_ARGS__ )
-            #define IotLogWarn(  pFormat, ... )      IotLog( IOT_LOG_WARN, pFormat, ##__VA_ARGS__ )
-            #define IotLogInfo(  pFormat, ... )      IotLog( IOT_LOG_INFO, pFormat,  ##__VA_ARGS__ )
-            #define IotLogDebug( pFormat, ... )     IotLog( IOT_LOG_DEBUG, pFormat, ##__VA_ARGS__ )
-
-            /* If log level is DEBUG, enable the function to print buffers. */
-            #define IotLog_PrintBuffer( pHeader, pBuffer, bufferSize )    \
-                    IotLog_GenericPrintBuffer( LIBRARY_LOG_NAME,          \
-                                            pHeader,                   \
-                                            pBuffer,                   \
-                                            bufferSize )
+/* If log level is DEBUG, enable the function to print buffers. */
+        #define IotLog_PrintBuffer( pHeader, pBuffer, bufferSize ) \
+    IotLog_GenericPrintBuffer( LIBRARY_LOG_NAME,                   \
+                               pHeader,                            \
+                               pBuffer,                            \
+                               bufferSize )
         /* Remove references to IotLog from the source code if logging is disabled. */
-        #elif LIBRARY_LOG_LEVEL == IOT_LOG_INFO
-            /* Debug messages will not be logged. All other macros will call IotLog */
-            #define IotLogError( pFormat, ...  )    IotLog( IOT_LOG_ERROR, pFormat,  ##__VA_ARGS__ )
-            #define IotLogWarn(  pFormat, ... )     IotLog( IOT_LOG_WARN, pFormat, ##__VA_ARGS__ )
-            #define IotLogInfo(  pFormat, ... )     IotLog( IOT_LOG_INFO, pFormat,  ##__VA_ARGS__ )
-            #define IotLogDebug( pFormat, ... )
-            #define IotLog_PrintBuffer( pHeader, pBuffer, bufferSize )
-        #elif LIBRARY_LOG_LEVEL == IOT_LOG_WARN
-            /* Only "Warning" and "Error" messages will be logged.*/
-            #define IotLogError( pFormat, ...  )    IotLog( IOT_LOG_ERROR, pFormat,  ##__VA_ARGS__ )
-            #define IotLogWarn(  pFormat, ... )     IotLog( IOT_LOG_WARN, pFormat, ##__VA_ARGS__ )
-            #define IotLogInfo(  pFormat, ... )
-            #define IotLogDebug( pFormat, ... )
-            #define IotLog_PrintBuffer( pHeader, pBuffer, bufferSize )
-        #else
-            /* Only "Error" messages will be logged. */
-            #define IotLogError( pFormat, ...  )   IotLog( IOT_LOG_ERROR, pFormat,  ##__VA_ARGS__ )
-            #define IotLogWarn(  pFormat, ... )
-            #define IotLogInfo(  pFormat, ... )
-            #define IotLogDebug( pFormat, ... )
-            #define IotLog_PrintBuffer( pHeader, pBuffer, bufferSize )
-        #endif
-    #else
+    #elif LIBRARY_LOG_LEVEL == IOT_LOG_INFO
+        /* Debug messages will not be logged. All other macros will call IotLog */
+        #define IotLogError( pFormat, ... )    IotLog( IOT_LOG_ERROR, pFormat, ## __VA_ARGS__ )
+        #define IotLogWarn( pFormat, ... )     IotLog( IOT_LOG_WARN, pFormat, ## __VA_ARGS__ )
+        #define IotLogInfo( pFormat, ... )     IotLog( IOT_LOG_INFO, pFormat, ## __VA_ARGS__ )
+        #define IotLogDebug( pFormat, ... )
+        #define IotLog_PrintBuffer( pHeader, pBuffer, bufferSize )
+    #elif LIBRARY_LOG_LEVEL == IOT_LOG_WARN
+        /* Only "Warning" and "Error" messages will be logged.*/
+        #define IotLogError( pFormat, ... )    IotLog( IOT_LOG_ERROR, pFormat,  ## __VA_ARGS__ )
+        #define IotLogWarn( pFormat, ... )     IotLog( IOT_LOG_WARN, pFormat, ## __VA_ARGS__ )
+        #define IotLogInfo( pFormat, ... )
+        #define IotLogDebug( pFormat, ... )
+        #define IotLog_PrintBuffer( pHeader, pBuffer, bufferSize )
+    #elif LIBRARY_LOG_LEVEL == IOT_LOG_ERROR
+        /* Only "Error" messages will be logged. */
+        #define IotLogError( pFormat, ... )    IotLog( IOT_LOG_ERROR, pFormat,  ## __VA_ARGS__ )
+        #define IotLogWarn( pFormat, ... )
+        #define IotLogInfo( pFormat, ... )
+        #define IotLogDebug( pFormat, ... )
+        #define IotLog_PrintBuffer( pHeader, pBuffer, bufferSize )
+    #else /* if LIBRARY_LOG_LEVEL >= IOT_LOG_DEBUG */
         /* @[declare_logging_log] */
-        #define IotLog( messageLevel, pLogConfig, ... )
+        /* #define IotLog( messageLevel, pLogConfig, ... ) */
         /* @[declare_logging_log] */
         /* @[declare_logging_printbuffer] */
         #define IotLog_PrintBuffer( pHeader, pBuffer, bufferSize )
         /* @[declare_logging_printbuffer] */
-        #define IotLogError( ...  )
+        #define IotLogError( ... )
         #define IotLogWarn( ... )
         #define IotLogInfo( ... )
         #define IotLogDebug( ... )
-    #endif
-#endif
+    #endif /* if LIBRARY_LOG_LEVEL >= IOT_LOG_DEBUG */
+#endif /* if !defined( LIBRARY_LOG_LEVEL ) || ( ( LIBRARY_LOG_LEVEL != IOT_LOG_NONE ) && ( LIBRARY_LOG_LEVEL != IOT_LOG_ERROR ) && ( LIBRARY_LOG_LEVEL != IOT_LOG_WARN ) && ( LIBRARY_LOG_LEVEL != IOT_LOG_INFO ) && ( LIBRARY_LOG_LEVEL != IOT_LOG_DEBUG ) ) */
 
 #endif /* ifndef IOT_LOGGING_SETUP_H_ */
