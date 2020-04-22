@@ -30,14 +30,6 @@ typedef int MQTTNetworkContext_t;
 
 #ifdef USE_LOGGING_FRAMEWORK
 
-    #define IOT_LOG_LEVEL_GLOBAL    IOT_LOG_NONE
-
-    #define MQTT_LOG_LEVEL          IOT_LOG_INFO
-
-    #define HTTP_LOG_LEVEL          IOT_LOG_INFO
-
-    #include "iot_logging_setup.h"
-
 /* Include file for POSIX reference implementation. */
     #include "platform/include/iot_logging.h"
 
@@ -52,6 +44,8 @@ typedef int MQTTNetworkContext_t;
                     __LINE__,                    \
                     LIBRARY_LOG_NAME,            \
                     __VA_ARGS__ )
+
+    #include "iot_logging_setup.h"
 #else /* ifdef USE_LOGGING_FRAMEWORK */
 
     #define IotLogError( message )
