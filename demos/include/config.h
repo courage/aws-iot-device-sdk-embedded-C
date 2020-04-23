@@ -31,16 +31,6 @@ typedef int MQTTNetworkContext_t;
 #ifdef USE_LOGGING_FRAMEWORK
     #include "iot_logging_setup.h"
 #else /* ifdef USE_LOGGING_FRAMEWORK */
-
-    #define IotLogError            c90_IotLogError
-    #define IotLogErrorWithArgs    c90_IotLogErrorWithArgs
-    #define IotLogWarn             c90_IotLogWarn
-    #define IotLogWarnWithArgs     c90_IotLogWarnWithArgs
-    #define IotLogInfo             c90_IotLogInfo
-    #define IotLogInfoWithArgs     c90_IotLogInfoWithArgs
-    #define IotLogDebug            c90_IotLogDebug
-    #define IotLogDebugWithArgs    c90_IotLogDebugWithArgs
-
 #endif /* ifdef USE_LOGGING_FRAMEWORK */
 
 

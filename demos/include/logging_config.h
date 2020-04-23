@@ -24,27 +24,37 @@
 
 #ifdef USE_LOGGING_FRAMEWORK
 
-/* Logging verbosity configuration for libraries. */
-    #define MQTT_LOG_LEVEL      IOT_LOG_DEBUG
-    #define HTTP_LOG_LEVEL      IOT_LOG_NONE
-    #define GLOBAL_LOG_LEVEL    IOT_LOG_INFO
-
 /* Include file for POSIX reference implementation. */
     #include "platform/include/iot_logging.h"
+
+/* Check if compiler supports C99 or above, as variadic macros are supported in the C99 standard. */
+    #if defined( __STDC_VERSION__ ) && __STDC_VERSION__ >= 199901L
+
+/* Logging verbosity configuration for libraries. */
+        #define MQTT_LOG_LEVEL      IOT_LOG_DEBUG
+        #define HTTP_LOG_LEVEL      IOT_LOG_NONE
+        #define GLOBAL_LOG_LEVEL    IOT_LOG_INFO
 
 /* Define the IotLog logging interface to enabling logging.
  * This demo maps the macro to the reference POSIX implementation for logging.
  * Note: @ref LIBRARY_LOG_NAME adds the name of the library, that produces the
  * log, as metadata in each log message. */
-    #define IotLog( messageLevel, pFormat, ... ) \
-    IotLog_Generic( messageLevel,                \
-                    "[%s:%d] [%s] "pFormat,      \
-                    __FILE__,                    \
-                    __LINE__,                    \
-                    LIBRARY_LOG_NAME,            \
+        #define IotLog( messageLevel, pFormat, ... ) \
+    IotLog_Generic( messageLevel,                    \
+                    "[%s:%d] [%s] "pFormat,          \
+                    __FILE__,                        \
+                    __LINE__,                        \
+                    LIBRARY_LOG_NAME,                \
                     __VA_ARGS__ )
 
+    #else /* if __STDC_VERSION__ >= 199901L */
 
+        #define IotLogError( formatStringAndArgs )
+        #define IotLogWarn( formatStringAndArgs )
+        #define IotLogInfo( formatStringAndArgs )
+        #define IotLogDebug( formatStringAndArgs )
+
+    #endif /* if __STDC_VERSION__ >= 199901L */
 
 #endif /* ifdef USE_LOGGING_FRAMEWORK */
 
