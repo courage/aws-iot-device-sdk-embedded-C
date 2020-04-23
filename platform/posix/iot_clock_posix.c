@@ -24,11 +24,10 @@
  * @brief Implementation of the functions in iot_clock.h for POSIX systems.
  */
 
-/* The config header is always included first. */
-#include "config.h"
-
 /* Standard includes. */
 #include <stdlib.h>
+
+/* #include "config.h" */
 
 /* POSIX include. Allow the default POSIX header to be overridden. */
 #ifdef POSIX_TIME_HEADER
@@ -52,8 +51,6 @@
 #endif
 
 #define LIBRARY_LOG_NAME    ( "CLOCK" )
-#include "iot_logging_setup.h"
-
 /*-----------------------------------------------------------*/
 
 /**
