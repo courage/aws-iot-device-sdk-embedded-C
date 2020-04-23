@@ -24,11 +24,29 @@
 
 #ifdef USE_LOGGING_FRAMEWORK
 
-    #define MQTT_LOG_LEVEL      IOT_LOG_ERROR
+/* Logging verbosity configuration for libraries. */
+    #define MQTT_LOG_LEVEL      IOT_LOG_DEBUG
     #define HTTP_LOG_LEVEL      IOT_LOG_NONE
     #define GLOBAL_LOG_LEVEL    IOT_LOG_INFO
 
-#endif
+/* Include file for POSIX reference implementation. */
+    #include "platform/include/iot_logging.h"
+
+/* Define the IotLog logging interface to enabling logging.
+ * This demo maps the macro to the reference POSIX implementation for logging.
+ * Note: @ref LIBRARY_LOG_NAME adds the name of the library, that produces the
+ * log, as metadata in each log message. */
+    #define IotLog( messageLevel, pFormat, ... ) \
+    IotLog_Generic( messageLevel,                \
+                    "[%s:%d] [%s] "pFormat,      \
+                    __FILE__,                    \
+                    __LINE__,                    \
+                    LIBRARY_LOG_NAME,            \
+                    __VA_ARGS__ )
+
+
+
+#endif /* ifdef USE_LOGGING_FRAMEWORK */
 
 
 #endif /* ifndef CONFIG_H */

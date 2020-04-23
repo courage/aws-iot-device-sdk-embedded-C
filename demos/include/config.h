@@ -29,33 +29,17 @@ typedef int MQTTNetworkContext_t;
 #define MQTT_MAX_QUEUED_PUBLISH_MESSAGES    10
 
 #ifdef USE_LOGGING_FRAMEWORK
-
-/* Include file for POSIX reference implementation. */
-    #include "platform/include/iot_logging.h"
-
-/* Define the IotLog logging interface to enabling logging.
- * This demo maps the macro to the reference POSIX implementation for logging.
- * Note: @ref LIBRARY_LOG_NAME adds the name of the library, that produces the
- * log, as metadata in each log message. */
-    #define IotLog( messageLevel, pFormat, ... ) \
-    IotLog_Generic( messageLevel,                \
-                    "[%s:%d] [%s] "pFormat,      \
-                    __FILE__,                    \
-                    __LINE__,                    \
-                    LIBRARY_LOG_NAME,            \
-                    __VA_ARGS__ )
-
     #include "iot_logging_setup.h"
 #else /* ifdef USE_LOGGING_FRAMEWORK */
 
-    #define IotLogError( message )
-    #define IotLogErrorWithArgs( format, ... )
-    #define IotLogWarn( message )
-    #define IotLogWarnWithArgs( format, ... )
-    #define IotLogInfo( message )
-    #define IotLogInfoWithArgs( format, ... )
-    #define IotLogDebug( message )
-    #define IotLogDebugWithArgs( format, ... )
+    #define IotLogError            c90_IotLogError
+    #define IotLogErrorWithArgs    c90_IotLogErrorWithArgs
+    #define IotLogWarn             c90_IotLogWarn
+    #define IotLogWarnWithArgs     c90_IotLogWarnWithArgs
+    #define IotLogInfo             c90_IotLogInfo
+    #define IotLogInfoWithArgs     c90_IotLogInfoWithArgs
+    #define IotLogDebug            c90_IotLogDebug
+    #define IotLogDebugWithArgs    c90_IotLogDebugWithArgs
 
 #endif /* ifdef USE_LOGGING_FRAMEWORK */
 
