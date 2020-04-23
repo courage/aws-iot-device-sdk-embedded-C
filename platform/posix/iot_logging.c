@@ -127,6 +127,36 @@ static bool _reallocLoggingBuffer( void ** pOldBuffer,
 
 /*-----------------------------------------------------------*/
 
+void IotLog_Error( const char * const pFormat,
+                   ... )
+{
+    puts( "C90 Error\n" );
+}
+
+/*-----------------------------------------------------------*/
+void IotLog_Warn( const char * const pFormat,
+                  ... )
+{
+    puts( "C90 Warn\n" );
+}
+
+/*-----------------------------------------------------------*/
+void IotLog_Info( const char * const pFormat,
+                  ... )
+{
+    puts( "C90 Info\n" );
+}
+
+/*-----------------------------------------------------------*/
+
+void IotLog_Debug( const char * const pFormat,
+                   ... )
+{
+    puts( "C90 Debug\n" );
+}
+
+/*-----------------------------------------------------------*/
+
 void IotLog_Generic( int32_t messageLevel,
                      const char * const pFormat,
                      ... )
