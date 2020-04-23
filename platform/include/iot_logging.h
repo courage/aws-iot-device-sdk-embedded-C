@@ -63,6 +63,16 @@
 void IotLog_Generic( int32_t messageLevel,
                      const char * const pFormat,
                      ... );
+
+void IotLog_Error( const char * const pFormat,
+                   ... );
+void IotLog_Warn( const char * const pFormat,
+                  ... );
+void IotLog_Info( const char * const pFormat,
+                  ... );
+void IotLog_Debug( const char * const pFormat,
+                   ... );
+
 /* @[declare_logging_generic] */
 
 

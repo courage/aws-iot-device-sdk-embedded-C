@@ -49,10 +49,10 @@
 
     #else /* if __STDC_VERSION__ >= 199901L */
 
-        #define IotLogError( formatStringAndArgs )
-        #define IotLogWarn( formatStringAndArgs )
-        #define IotLogInfo( formatStringAndArgs )
-        #define IotLogDebug( formatStringAndArgs )
+        #define IotLogError( formatStringAndArgs )    IotLog_Error formatStringAndArgs
+        #define IotLogWarn( formatStringAndArgs )     IotLog_Warn formatStringAndArgs
+        #define IotLogInfo( formatStringAndArgs )     IotLog_Info formatStringAndArgs
+        #define IotLogDebug( formatStringAndArgs )    IotLog_Debug formatStringAndArgs
 
     #endif /* if __STDC_VERSION__ >= 199901L */
 

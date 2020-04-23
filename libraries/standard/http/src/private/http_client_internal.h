@@ -16,6 +16,17 @@
             #define LIBRARY_LOG_LEVEL    IOT_LOG_NONE
         #endif
     #endif
+#else /* ifdef USE_LOGGING_FRAMEWORK */
+
+    #define IotLogError( message )
+    #define IotLogErrorWithArgs( formatAndStrings )
+    #define IotLogWarn( message )
+    #define IotLogWarnWithArgs( formatAndStrings )
+    #define IotLogInfo( message )
+    #define IotLogInfoWithArgs( formatAndStrings )
+    #define IotLogDebug( message )
+    #define IotLogDebugWithArgs( formatAndStrings )
+
 #endif /* ifdef USE_LOGGING_FRAMEWORK */
 
 #include "config.h"

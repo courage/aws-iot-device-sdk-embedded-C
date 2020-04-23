@@ -34,7 +34,6 @@
 /* Include header for logging level macros. */
 #include "iot_logging_levels.h"
 
-
 /**
  * @functionpage{IotLog,logging,log}
  */
