@@ -145,8 +145,7 @@
     #error "Please define LIBRARY_LOG_LEVEL as either IOT_LOG_NONE, IOT_LOG_ERROR, IOT_LOG_WARN, IOT_LOG_INFO, or IOT_LOG_DEBUG."
 #else
 /* Check if compiler supports C99 or above, as variadic macros are supported in the C99 standard. */
-/*#if defined( __STDC_VERSION__ ) && __STDC_VERSION__ >= 199901L */
-    #if USE_C99
+    #if defined( __STDC_VERSION__ ) && __STDC_VERSION__ >= 199901L
 
 /* Check that LIBRARY_LOG_LEVEL is defined and has a valid value. */
 
