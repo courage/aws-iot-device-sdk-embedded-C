@@ -1,9 +1,9 @@
 #ifndef __MQTT_CLIENT_INTERNAL_H__
 #define __MQTT_CLIENT_INTERNAL_H__
 
-#include "logging_config.h"
-
 #ifdef USE_LOGGING_FRAMEWORK
+
+    #include "logging_config.h"
 
     #define LIBRARY_LOG_NAME             "MQTT"
 
