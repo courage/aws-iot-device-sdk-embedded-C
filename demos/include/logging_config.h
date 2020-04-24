@@ -33,8 +33,7 @@
     #define GLOBAL_LOG_LEVEL    IOT_LOG_INFO
 
 /* Check if compiler supports C99 or above, as variadic macros are supported in the C99 standard. */
-    /*#if defined( __STDC_VERSION__ ) && __STDC_VERSION__ >= 199901L */
-    #if USE_C99
+    #if defined( __STDC_VERSION__ ) && __STDC_VERSION__ >= 199901L
 
 /* Define the IotLog logging interface to enabling logging.
  * This demo maps the macro to the reference POSIX implementation for logging.
