@@ -28,9 +28,6 @@
 #ifndef IOT_LOGGING_SETUP_H_
 #define IOT_LOGGING_SETUP_H_
 
-/* The config header is always included first. */
-#include "config.h"
-
 /* Include header for logging level macros. */
 #include "iot_logging_levels.h"
 
