@@ -28,8 +28,6 @@ typedef int MQTTNetworkContext_t;
 
 #define MQTT_MAX_QUEUED_PUBLISH_MESSAGES    10
 
-#ifdef USE_LOGGING_FRAMEWORK
-    #include "iot_logging_setup.h"
 #else /* ifdef USE_LOGGING_FRAMEWORK */
 #endif /* ifdef USE_LOGGING_FRAMEWORK */
 
