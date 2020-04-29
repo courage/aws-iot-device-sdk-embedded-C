@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include "config.h"
 #include "mqtt_client.h"
 
 int main( void )

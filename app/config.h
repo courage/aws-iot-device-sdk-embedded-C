@@ -22,40 +22,34 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-#ifdef USE_LOGGING_FRAMEWORK
-
 /* Include file for POSIX reference implementation. */
-    #include "platform/include/iot_logging.h"
-
-/* Logging verbosity configuration for libraries. */
-    #define MQTT_LOG_LEVEL      IOT_LOG_DEBUG
-    #define HTTP_LOG_LEVEL      IOT_LOG_NONE
-    #define GLOBAL_LOG_LEVEL    IOT_LOG_INFO
+#include "platform/include/iot_logging.h"
 
 /* Check if compiler supports C99 or above, as variadic macros are supported in the C99 standard. */
-    #if defined( __STDC_VERSION__ ) && __STDC_VERSION__ >= 199901L
+#if defined( __STDC_VERSION__ ) && __STDC_VERSION__ >= 199901L
 
 /* Define the IotLog logging interface to enabling logging.
  * This demo maps the macro to the reference POSIX implementation for logging.
  * Note: @ref LIBRARY_LOG_NAME adds the name of the library, that produces the
  * log, as metadata in each log message. */
-        #define IotLog( messageLevel, pFormat, ... ) \
-    IotLog_Generic( messageLevel,                    \
-                    "[%s:%d] [%s] "pFormat,          \
-                    __FILE__,                        \
-                    __LINE__,                        \
-                    LIBRARY_LOG_NAME,                \
+    #define IotLog( messageLevel, pFormat, ... ) \
+    IotLog_Generic( messageLevel,                \
+                    "[%s:%d] [%s] "pFormat,      \
+                    __FILE__,                    \
+                    __LINE__,                    \
+                    LIBRARY_LOG_NAME,            \
                     __VA_ARGS__ )
 
-    #else /* if __STDC_VERSION__ >= 199901L */
+    #include "iot_logging_setup.h"
 
-        #define IotLogErrorC90( formatStringAndArgs )    IotLog_Error formatStringAndArgs
-        #define IotLogWarnC90( formatStringAndArgs )     IotLog_Warn formatStringAndArgs
-        #define IotLogInfoC90( formatStringAndArgs )     IotLog_Info formatStringAndArgs
-        #define IotLogDebugC90( formatStringAndArgs )    IotLog_Debug formatStringAndArgs
+#else /* if __STDC_VERSION__ >= 199901L */
 
-    #endif /* if __STDC_VERSION__ >= 199901L */
+    #define IotLogErrorC90( formatStringAndArgs )    IotLog_Error formatStringAndArgs
+    #define IotLogWarnC90( formatStringAndArgs )     IotLog_Warn formatStringAndArgs
+    #define IotLogInfoC90( formatStringAndArgs )     IotLog_Info formatStringAndArgs
+    #define IotLogDebugC90( formatStringAndArgs )    IotLog_Debug formatStringAndArgs
 
-#endif /* ifdef USE_LOGGING_FRAMEWORK */
+#endif /* if __STDC_VERSION__ >= 199901L */
+
 
 #endif /* ifndef CONFIG_H */
