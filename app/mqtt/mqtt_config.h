@@ -1,41 +1,45 @@
-#ifndef __MQTT_CLIENT_INTERNAL_H__
-#define __MQTT_CLIENT_INTERNAL_H__
+#ifndef __MQTT_CONFIG_H__
+#define __MQTT_CONFIG_H__
+
+#include "config.h"
+#include "logging_levels.h"
 
 #define LIBRARY_LOG_NAME     "MQTT"
 
-#define LIBRARY_LOG_LEVEL    IOT_LOG_DEBUG
+#define LIBRARY_LOG_LEVEL    LOG_DEBUG
 
-#ifndef IotLogError
-    #define IotLogError( message )
+#ifndef LogError
+    #define LogError( message )
 #endif
 
-#ifndef IotLogErrorWithArgs
-    #define IotLogErrorWithArgs( formatAndStrings )
+#ifndef LogErrorWithArgs
+    #define LogErrorWithArgs( formatAndStrings )
 #endif
 
-#ifndef IotLogWarn
-    #define IotLogWarn( message )
+#ifndef LogWarn
+    #define LogWarn( message )
 #endif
 
-#ifndef IotLogWarnWithArgs
-    #define IotLogWarnWithArgs( formatAndStrings )
+#ifndef LogWarnWithArgs
+    #define LogWarnWithArgs( formatAndStrings )
 #endif
 
-#ifndef IotLogInfo
-    #define IotLogInfo( message )
+#ifndef LogInfo
+    #define LogInfo( message )
 #endif
 
-#ifndef IotLogInfoWithArgs
-    #define IotLogInfoWithArgs( formatAndStrings )
+#ifndef LogInfoWithArgs
+    #define LogInfoWithArgs( formatAndStrings )
 #endif
 
-#ifndef IotLogDebug
-    #define IotLogDebug( message )
+#ifndef LogDebug
+    #define LogDebug( message )
 #endif
 
-#ifndef IotLogDebugWithArgs
-    #define IotLogDebugWithArgs( formatAndStrings )
+#ifndef LogDebugWithArgs
+    #define LogDebugWithArgs( formatAndStrings )
 #endif
 
 
-#endif /* ifdef USE_LOGGING_FRAMEWORK */
+
+#endif /* ifndef __MQTT_CONFIG_H__ */

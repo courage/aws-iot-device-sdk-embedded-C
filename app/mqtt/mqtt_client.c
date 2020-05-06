@@ -3,12 +3,12 @@
 
 void MQTT_PublishMessage( void )
 {
-    IotLogError( ( "Error log string.\n" ) );
-    IotLogErrorWithArgs( ( "Error log with one arg: %d.\n", 1 ) );
-    IotLogWarn( ( "Warning log string.\n" ) );
-    IotLogWarnWithArgs( ( "Warning log with one arg: %d.\n", 1 ) );
-    IotLogInfo( ( "Info log string.\n" ) );
-    IotLogInfoWithArgs( ( "Info log with one arg: %d.\n", 1 ) );
-    IotLogDebug( ( "Debug log string.\n" ) );
-    IotLogDebugWithArgs( ( "Debug log with one arg: %d.\n", 1 ) );
+    LogError( ( "Error log string.\n" ) );
+    LogErrorWithArgs( ( "Error log with one arg: %d.\n", 1 ) );
+    LogWarn( ( "Warning log string.\n" ) );
+    LogWarnWithArgs( ( "Warning log with one arg: %d.\n", 1 ) );
+    LogInfo( ( "Info log string.\n" ) );
+    LogInfoWithArgs( ( "Info log with one arg: %d.\n", 1 ) );
+    LogDebug( ( "Debug log string.\n" ) );
+    LogDebugWithArgs( ( "Debug log with one arg: %d.\n", 1 ) );
 }
