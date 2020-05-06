@@ -22,6 +22,4 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-#include "logging_setup.h"
-
 #endif /* ifndef CONFIG_H */
