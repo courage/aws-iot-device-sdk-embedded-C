@@ -35,24 +35,7 @@
  */
 
 /**
- * @def Log( messageLevel, pFormat, ... )
- * @brief The common logging interface for all libraries.
- *
- * This acts as a hook for supplying a logging implementation stack
- * for all libraries that log through this macro interface.
- * This macro should be mapped to the platform's logging library.
- *
- * @param[in] messageLevel The integer code for the log level of the message.
- * Must be one of #LOG_ERROR, #LOG_WARN, #LOG_INFO or #LOG_DEBUG.
- * Must not be #LOG_NONE.
- * @param[in] pFormat The format string for the log message.
- * @param[in] ... The variadic argument list for the format string.
- *
- * @return No return value.
- */
-
-/**
- * @def LogError( message  )
+ * @def LogErrorC89( message  )
  * @brief Abbreviated logging macro for stand-alone message strings at level #LOG_ERROR.
  *
  * Equivalent to:
@@ -62,17 +45,7 @@
  */
 
 /**
- * @def LogErrorWithArgs( pFormat, ...  )
- * @brief Abbreviated logging macro for messages with arguments at level #LOG_ERROR.
- *
- * Equivalent to:
- * @code{c}
- * Log( LOG_ERROR, pFormat, ... )
- * @endcode
- */
-
-/**
- * @def LogWarn( message  )
+ * @def LogWarnC89( message  )
  * @brief Abbreviated logging macro for stand-alone message strings at level #LOG_WARN.
  *
  * Equivalent to:
@@ -82,17 +55,7 @@
  */
 
 /**
- * @def LogWarnWithArgs( pFormat, ...  )
- * @brief Abbreviated logging macro for messages with arguments at level #LOG_WARN.
- *
- * Equivalent to:
- * @code{c}
- * Log( LOG_WARN, pFormat, ... )
- * @endcode
- */
-
-/**
- * @def LogInfo( message  )
+ * @def LogInfoC89( message  )
  * @brief Abbreviated logging macro for stand-alone message strings at level #LOG_INFO.
  *
  * Equivalent to:
@@ -102,32 +65,12 @@
  */
 
 /**
- * @def LogInfoWithArgs( pFormat, ...  )
- * @brief Abbreviated logging macro for messages with arguments at level #LOG_INFO.
- *
- * Equivalent to:
- * @code{c}
- * Log( LOG_INFO, pFormat, ... )
- * @endcode
- */
-
-/**
- * @def LogDebug( message  )
+ * @def LogDebugC89( message  )
  * @brief Abbreviated logging macro for stand-alone message strings at level #LOG_DEBUG.
  *
  * Equivalent to:
  * @code{c}
  * Log( LOG_DEBUG, "%s" , message )
- * @endcode
- */
-
-/**
- * @def LogDebugWithArgs( pFormat, ...  )
- * @brief Abbreviated logging macro for messages with arguments at level #LOG_DEBUG.
- *
- * Equivalent to:
- * @code{c}
- * Log( LOG_DEBUG, pFormat, ... )
  * @endcode
  */
 
