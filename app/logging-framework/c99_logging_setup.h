@@ -141,16 +141,23 @@
  * This demo maps the macro to the reference POSIX implementation for logging.
  * Note: @ref LIBRARY_LOG_NAME adds the name of the library, that produces the
  * log, as metadata in each log message. */
-#define CommonLog99( libraryName, messageLevel, format, ... ) \
-    Log_Generic( messageLevel,                                \
-                 "[%s:%d] [%s] "format,                       \
-                 __FILE__,                                    \
-                 __LINE__,                                    \
-                 libraryName,                                 \
-                 ## __VA_ARGS__ )
+#define CommonLog99WithArgs( libraryName, messageLevel, format, ... ) \
+    Log_Generic( messageLevel,                                        \
+                 "[%s:%d] [%s] "format,                               \
+                 __FILE__,                                            \
+                 __LINE__,                                            \
+                 libraryName,                                         \
+                 __VA_ARGS__ )
+
+#define CommonLog99( libraryName, messageLevel, format ) \
+    Log_Generic( messageLevel,                           \
+                 "[%s:%d] [%s] "format,                  \
+                 __FILE__,                               \
+                 __LINE__,                               \
+                 libraryName )
 
 #define LogWithArgs( libraryName, messageLevel, formatAndString ) \
-    CommonLog99( libraryName, messageLevel, parseFormatString formatAndString, parseFormatArgs formatAndString )
+    CommonLog99WithArgs( libraryName, messageLevel, parseFormatString formatAndString, parseFormatArgs formatAndString )
 
 #define Log( libraryName, messageLevel, message ) \
     CommonLog99( libraryName, messageLevel, parseFormatString message )
