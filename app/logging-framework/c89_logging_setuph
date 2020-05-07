@@ -21,15 +21,12 @@
  */
 
 /**
- * @file c99_logging_setup.h
+ * @file c89_logging_setup.h
  * @brief Defines the common logging framework that calls #Log interface.
  */
 
-#ifndef C99_LOGGING_SETUP_H_
-#define C99_LOGGING_SETUP_H_
-
-/* Include header for logging level macros. */
-#include "logging_levels.h"
+#ifndef C89_LOGGING_SETUP_H_
+#define C89_LOGGING_SETUP_H_
 
 #include "logging.h"
 
@@ -134,25 +131,10 @@
  * @endcode
  */
 
-#define parseFormatString( format, ... )    format
-#define parseFormatArgs( format, ... )      __VA_ARGS__
+#define LogErrorC89( message )    Log_Error message
+#define LogWarnC89( message )     Log_Warn message
+#define LogInfoC89( message )     Log_Info message
+#define LogDebugC89( message )    Log_Debug message
 
-/* Define the IotLog logging interface to enabling logging.
- * This demo maps the macro to the reference POSIX implementation for logging.
- * Note: @ref LIBRARY_LOG_NAME adds the name of the library, that produces the
- * log, as metadata in each log message. */
-#define CommonLog99( libraryName, messageLevel, format, ... ) \
-    Log_Generic( messageLevel,                                \
-                 "[%s:%d] [%s] "format,                       \
-                 __FILE__,                                    \
-                 __LINE__,                                    \
-                 libraryName,                                 \
-                 ## __VA_ARGS__ )
 
-#define LogWithArgs( libraryName, messageLevel, formatAndString ) \
-    CommonLog99( libraryName, messageLevel, parseFormatString formatAndString, parseFormatArgs formatAndString )
-
-#define Log( libraryName, messageLevel, message ) \
-    CommonLog99( libraryName, messageLevel, parseFormatString message )
-
-#endif /* ifndef C99_LOGGING_SETUP_H_ */
+#endif /* ifndef C89_LOGGING_SETUP_H_ */
