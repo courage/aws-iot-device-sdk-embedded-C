@@ -1,11 +1,10 @@
-#ifndef __MQTT_CONFIG_H__
-#define __MQTT_CONFIG_H__
+#ifndef __SHADOW_CONFIG_H__
+#define __SHADOW_CONFIG_H__
 
-#include "config.h"
 #include "logging_levels.h"
 #include "c99_logging_setup.h"
 
-#define LIBRARY_LOG_NAME    "MQTT"
+#define LIBRARY_LOG_NAME    "Shadow"
 
 #define LogError( message )                     Log( LIBRARY_LOG_NAME, LOG_ERROR, message )
 #define LogErrorWithArgs( formatAndStrings )    LogWithArgs( LIBRARY_LOG_NAME, LOG_ERROR, formatAndStrings )
@@ -17,4 +16,5 @@
 #define LogDebugWithArgs( formatAndStrings )    LogWithArgs( LIBRARY_LOG_NAME, LOG_DEBUG, formatAndStrings )
 
 
-#endif /* ifndef __MQTT_CONFIG_H__ */
+
+#endif /* ifndef __SHADOW_CONFIG_H__ */
