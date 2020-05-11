@@ -1,16 +1,12 @@
-#include "shadow_client.h"
-#include "shadow_config.h"
+#include "mqtt_client.h"
+#include "mqtt_client_internal.h"
 
-void Shadow_Get( void )
+void MQTT_PublishMessage( void )
 {
     LogError( ( "Error log string.\n" ) );
     LogErrorWithArgs( ( "Error log with one arg: %d.\n", 1 ) );
     LogWarn( ( "Warning log string.\n" ) );
     LogWarnWithArgs( ( "Warning log with one arg: %d.\n", 1 ) );
-
-    /* Call MQTT dependency. */
-    MQTT_PublishMessage();
-
     LogInfo( ( "Info log string.\n" ) );
     LogInfoWithArgs( ( "Info log with one arg: %d.\n", 1 ) );
     LogDebug( ( "Debug log string.\n" ) );

@@ -1,7 +1,7 @@
-#include "mqtt_client.h"
-#include "mqtt_config.h"
+#include "shadow_client.h"
+#include "shadow_client_internal.h"
 
-void MQTT_PublishMessage( void )
+void Shadow_Get( void )
 {
     LogError( ( "Error log string.\n" ) );
     LogErrorWithArgs( ( "Error log with one arg: %d.\n", 1 ) );
