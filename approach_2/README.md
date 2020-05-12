@@ -1,18 +1,16 @@
 ## Build Information for App_1 and App_2
-Each of the apps only calls the `Shadow_Get` function, but specifies configuration for both MQTT and Shadow libraries.
-
-Build Directory for the below commands is the root directory of the branch (i.e. ../).
+Each of the apps only calls the `MQTT_PublishMessage` and `Shadow_Get` function, and specifies configuration for both MQTT and Shadow libraries.
 
 ### App_1 
 <b>Logging level Configuration:</b>
 * Debug for MQTT
 * Warning for Shadow
 
-`gcc -std=gnu99 -I app/app_1 -I app/logging-framework -I app/logging-stack -I app/mqtt -I app/shadow app/app_1/main.c app/logging-stack/clock_posix.c app/logging-stack/logging.c app/mqtt/mqtt_client.c app/shadow/shadow_client.c -o app_1`
+`gcc -std=gnu99 -DENABLE_LOGGING -I app_1 -I logging-framework -I logging-stack -I mqtt -I mqtt/private -I shadow -I shadow/private app_1/main.c logging-stack/clock_posix.c logging-stack/logging.c mqtt/mqtt_client.c shadow/shadow_client.c -o build_1`
 
 ### App_2
 <b>Logging level Configuration:</b>
 * None for MQTT
-* Debug for Shadow
+* None for Shadow
 
-`gcc -std=gnu99 -I app/app_2 -I app/logging-framework -I app/logging-stack -I app/mqtt -I app/shadow app/app_2/main.c app/logging-stack/clock_posix.c app/logging-stack/logging.c app/mqtt/mqtt_client.c app/shadow/shadow_client.c -o app_2`
+`gcc -std=gnu99 -DENABLE_LOGGING -I app_2 -I logging-framework -I logging-stack -I mqtt -I mqtt/private -I shadow -I shadow/private app_2/main.c logging-stack/clock_posix.c logging-stack/logging.c mqtt/mqtt_client.c shadow/shadow_client.c -o build_2`
