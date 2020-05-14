@@ -14,3 +14,11 @@ Each of the apps only calls the `MQTT_PublishMessage` and `Shadow_Get` function,
 * None for Shadow
 
 `gcc -std=gnu99 -I app_2 -I logging-framework -I logging-stack -I mqtt -I mqtt/private -I shadow -I shadow/private app_2/main.c logging-stack/clock_posix.c logging-stack/logging.c mqtt/mqtt_client.c shadow/shadow_client.c -o build_2`
+
+### App_3
+Exhibits extensibility of logging interfaces with a macro shim layer.
+<b>Logging level Configuration:</b>
+* None for MQTT
+* None for Shadow
+
+`gcc -std=gnu99 -I app_3 -I logging-framework -I logging-stack -I mqtt -I mqtt/private -I shadow -I shadow/private app_3/main.c logging-stack/clock_posix.c logging-stack/logging.c mqtt/mqtt_client.c shadow/shadow_client.c -o build_3`
